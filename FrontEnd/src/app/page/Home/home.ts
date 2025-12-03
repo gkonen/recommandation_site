@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {AuthService} from '../../api/auth-service';
 
 @Component({
@@ -9,10 +9,6 @@ import {AuthService} from '../../api/auth-service';
 })
 export class Home {
   private authService = inject(AuthService);
-  readonly isAuthenticated = signal(this.authService.isAuthenticated());
-
-  ngOnChanges() {
-    this.isAuthenticated.set(this.authService.isAuthenticated());
-  }
+  readonly isAuthenticated = this.authService.isAuthenticated;
 
 }
