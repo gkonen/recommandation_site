@@ -57,3 +57,64 @@ html, body {
   background-color: var(--background);
   height: 100%;
 }
+
+ /* style button */
+.md-button {
+  align-items: center;
+  appearance: none;
+  border-radius: var(--border-radius);
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px, rgba(0, 0, 0, .14) 0 2px 2px 0, rgba(0, 0, 0, .12) 0 1px 5px 0;
+  box-sizing: border-box;
+  color: var(--on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  letter-spacing: .0892857em;
+  line-height: normal;
+  min-width: 64px;
+  outline: none;
+  overflow: visible;
+  padding: 0 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 280ms cubic-bezier(.4, 0, .2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  will-change: transform, opacity;
+}
+
+.md-button:not(:disabled) {
+  background-color: var(--primary);
+}
+
+.md-button:hover:not(:disabled) {
+  background-color: var(--primary-container);
+  box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+}
+
+.md-button:focus {
+  box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+}
+
+.md-button:active:not(:disabled) {
+  background-color: var(--on-primary-container);
+  box-shadow: rgba(0, 0, 0, .2) 0 5px 5px -3px, rgba(0, 0, 0, .14) 0 8px 10px 1px, rgba(0, 0, 0, .12) 0 3px 14px 2px;
+}
+
+.md-button:disabled {
+  background-color: var(--surface-variant);
+  box-shadow: none;
+  color: var(--on-surface-variant);
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
