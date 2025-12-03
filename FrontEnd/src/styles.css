@@ -1,1 +1,59 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: rgb(0 105 115);
+  --on-primary: rgb(255 255 255);
+  --primary-container: rgb(0 160 176);
+  --on-primary-container: rgb(0 47 53);
+
+  /* Secondaries color */
+  --secondary: rgb(61 101 107);
+  --on-secondary: rgb(255 255 255);
+  --secondary-container: rgb(189 231 238);
+  --on-secondary-container: rgb(65 105 111);
+
+  /* State's colors */
+  /* Error */
+  --error: rgb(186 26 26);
+  --on-error: rgb(255 255 255);
+  --error-container: rgb(255 218 214);
+  --on-error-container: rgb(147 0 10);
+  /* Success */
+  --success: rgb(46 125 50);
+  --on-success: rgb(255 255 255);
+  --success-container: rgb(200 230 201);
+  --on-success-container: rgb(27 94 32);
+  /* Warning */
+  --warning: rgb(237 108 2);
+  --on-warning: rgb(255 255 255);
+  --warning-container: rgb(255 224 178);
+  --on-warning-container: rgb(142 65 0);
+
+  /* Surfaces */
+  --background: rgb(245 250 251);
+  --on-background: rgb(23 29 29);
+  --surface: rgb(245 250 251);
+  --on-surface: rgb(23 29 29);
+  --surface-variant: rgb(216 229 231);
+  --on-surface-variant: rgb(61 73 75);
+
+  /* Bordures */
+  --outline: rgb(109 121 123);
+  --outline-variant: rgb(188 201 203);
+  --border-radius: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+html, body {
+  margin:0;
+  padding:0;
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: var(--background);
+  height: 100%;
+}

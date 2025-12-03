@@ -15,4 +15,4 @@ def hello_world():
 
 if __name__ == '__main__':
     print(f"Database name: {name}")
-    app.run()
+    # app.run()
