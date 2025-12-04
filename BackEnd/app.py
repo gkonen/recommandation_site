@@ -1,10 +1,7 @@
-import os
 
 from flask import Flask
-from dotenv import load_dotenv
+from database.engine.db_engine import DBEngine as Engine
 
-load_dotenv()
-name = os.getenv("DB_NAME")
 app = Flask(__name__)
 
 
@@ -14,5 +11,5 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    print(f"Database name: {name}")
-    app.run()
+    engine = Engine.get_engine()
+    #app.run()
