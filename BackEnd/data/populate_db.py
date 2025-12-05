@@ -1,5 +1,5 @@
 import pandas as pd
-from database.engine.db_engine import DBEngine
+from database.config.db_engine import DBEngine
 
 
 # genres_df = pd.read_pickle('data/pickle_files/genres.pkl')
@@ -13,7 +13,7 @@ movie_genre_df = pd.read_pickle('data/pickle_files/movie_genre.pkl')
 
 app_user_df = pd.read_pickle('data/pickle_files/app_user.pkl')
 
-ratings_df = pd.read_pickle('data/pickle_files/ratings.pkl')
+ratings_df = pd.read_pickle('data/pickle_files/rating.pkl')
 
 if __name__ == "__main__":
     # Get the SQLAlchemy engine from your DBEngine module
