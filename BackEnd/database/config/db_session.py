@@ -19,5 +19,5 @@ class DBSession:
                 self._session_local.rollback()
                 print(f"Error occurred during request {exc_type.__name__}")
                 traceback.print_exception(exc_type, exc_val, exc_tb)
-        self._session_local.close()
+            self._session_local.close()
         return False
