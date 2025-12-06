@@ -5,7 +5,8 @@ class MovieController:
         self.__repository = movie_repository
 
     def get_all_movies(self):
-        return self.__repository.get_all_movies()
+        list_movies = self.__repository.get_all_movies()
+        return {"movies": [{"id": m.movie_id, "title": m.title, "genre": [ g.genre_name for g in m.genres]} for m in list_movies[:50]]}
 
     def get_movie(self, movie_id):
         movie = self.__repository.get_movie(movie_id)
