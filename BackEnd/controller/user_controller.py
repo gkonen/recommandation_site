@@ -10,6 +10,6 @@ class UserController:
     def get_user(self, user_id):
         user = self.__repository.get_user(user_id)
         if user is not None:
-            return {"id": user.userId, "username": user.username}, 200
+            return {"id": user.user_id, "username": user.username}, 200
         else:
             return {"error" : "User not found"}, 400
