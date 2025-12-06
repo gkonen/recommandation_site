@@ -2,6 +2,10 @@ import numpy as np
 import pandas as pd
 
 
+CSV_PATH = 'data/csv_files/'
+PKL_PATH = 'data/pickle_files/'
+
+
 def prep_genres_df() -> pd.DataFrame:
 
     genre_list = [ "Action", "Adventure", "Animation", "Children", "Comedy", "Crime", "Documentary", "Drama", "Fantasy", "Film-Noir", "Horror", "IMAX", "Musical", "Mystery", "Romance", "Sci-Fi", "Thriller", "War", "Western", "(no genres listed)" ]
@@ -10,11 +14,14 @@ def prep_genres_df() -> pd.DataFrame:
 
 def prep_movies_df() -> tuple[pd.DataFrame, pd.DataFrame]:
 
-    movies = pd.read_csv('csv_files/movies.csv')
+    movies = pd.read_csv(f'{CSV_PATH}movies.csv')
 
     # separate 'year' from 'title'
     movies['year'] = movies['title'].str.extract(r'\((\d{4})\)\s*$')
     movies['title'] = movies['title'].str.replace(r'\s*\(\d{4}\)\s*$', '', regex=True)
+
+    # convert 'year' from sting to numeric
+    movies['year'] = pd.to_numeric(movies['year'], errors='coerce')
 
     # make new column with movie's genres into an array
     movies['genres_list'] = pd.Series(movies['genres'].str.split('|'))
@@ -39,13 +46,13 @@ def prep_movie_genre_df(exp_movies: pd.DataFrame, genres: pd.DataFrame) -> pd.Da
 
 def prep_tags_df() -> pd.DataFrame:
 
-    tags_df = pd.read_csv('csv_files/tags.csv')
+    tags_df = pd.read_csv(f'{CSV_PATH}tags.csv')
     tags_df.rename(columns={'userId':'user_id', 'movieId':'movie_id', 'timestamp':'recorded_at'}, inplace=True)
     return tags_df
 
 def prep_ratings_df() -> pd.DataFrame:
 
-    ratings_df = pd.read_csv('csv_files/ratings.csv')
+    ratings_df = pd.read_csv(f'{CSV_PATH}ratings.csv')
     ratings_df['rating'] = ratings_df['rating'].apply(lambda x: x*2).astype(int)
     ratings_df.rename(columns={'userId':'user_id', 'movieId':'movie_id', 'timestamp':'recorded_at'}, inplace=True)
     return ratings_df
@@ -58,24 +65,24 @@ def prep_user_df(ratings: pd.DataFrame) -> pd.DataFrame:
 
 def main() -> None:
     genres_df = prep_genres_df()
-    genres_df.to_pickle('pickle_files/genre.pkl')
+    genres_df.to_pickle(f'{PKL_PATH}genre.pkl')
 
     movie_tuple = prep_movies_df()
     movies_df = movie_tuple[0]
     exp_movies_df = movie_tuple[1]
-    movies_df.to_pickle('pickle_files/movie.pkl')
+    movies_df.to_pickle(f'{PKL_PATH}movie.pkl')
 
     movie_genre_df = prep_movie_genre_df(exp_movies_df, genres_df)
-    movie_genre_df.to_pickle('pickle_files/movie_genre.pkl')
+    movie_genre_df.to_pickle(f'{PKL_PATH}movie_genre.pkl')
 
     tag_df = prep_tags_df()
-    tag_df.to_pickle('pickle_files/tag.pkl')
+    tag_df.to_pickle(f'{PKL_PATH}tag.pkl')
 
     ratings_df = prep_ratings_df()
-    ratings_df.to_pickle('pickle_files/rating.pkl')
+    ratings_df.to_pickle(f'{PKL_PATH}rating.pkl')
 
     user_df = prep_user_df(ratings_df)
-    user_df.to_pickle('pickle_files/app_user.pkl')
+    user_df.to_pickle(f'{PKL_PATH}app_user.pkl')
 
     print('Data prepared/transformed and saved.')
 
