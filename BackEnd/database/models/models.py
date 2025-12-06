@@ -9,7 +9,7 @@ class Base(DeclarativeBase):
 class Movie(Base):
     __tablename__ = 'movie'
 
-    movieId: Mapped[int] = mapped_column("movieid", primary_key=True)
+    movie_id: Mapped[int] = mapped_column("movie_id", primary_key=True)
     title: Mapped[str] = mapped_column(Text, nullable=False)
     year: Mapped[int | None] = mapped_column(nullable=True)
 
@@ -21,8 +21,8 @@ class Movie(Base):
 class Genre(Base):
     __tablename__ = 'genre'
 
-    genreId: Mapped[int] = mapped_column("genreid", primary_key=True, autoincrement=True)
-    genreName: Mapped[str] = mapped_column("genrename", Text, nullable=False)
+    genre_id: Mapped[int] = mapped_column("genre_id", primary_key=True, autoincrement=True)
+    genre_name: Mapped[str] = mapped_column("genre_name", Text, nullable=False)
 
     movies: Mapped[list['Movie']] = relationship(secondary='movie_genre', back_populates='genres')
 
@@ -30,7 +30,7 @@ class Genre(Base):
 class AppUser(Base):
     __tablename__ = 'app_user'
 
-    userId: Mapped[int] = mapped_column("userid", primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column("user_id", primary_key=True, autoincrement=True)
     username: Mapped[str] = mapped_column(Text, nullable=False)
     pw: Mapped[str] = mapped_column(Text, nullable=False)
 
@@ -38,12 +38,12 @@ class AppUser(Base):
     tags: Mapped[list['Tag']] = relationship(back_populates='user', cascade='all, delete-orphan')
 
 
-# Relationnal table
+# Relational table
 class MovieGenre(Base):
     __tablename__ = 'movie_genre'
 
-    movieId: Mapped[int] = mapped_column("movieid",ForeignKey('movie.movieid', ondelete='CASCADE'), primary_key=True)
-    genreId: Mapped[int] = mapped_column("genreid",ForeignKey('genre.genreid', ondelete='CASCADE'), primary_key=True)
+    movie_id: Mapped[int] = mapped_column("movie_id",ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
+    genre_id: Mapped[int] = mapped_column("genre_id",ForeignKey('genre.genre_id', ondelete='CASCADE'), primary_key=True)
 #endregion
 
 
@@ -51,8 +51,8 @@ class MovieGenre(Base):
 class Rating(Base):
     __tablename__ = 'rating'
 
-    movieId: Mapped[int] = mapped_column("movieid", ForeignKey('movie.movieid', ondelete='CASCADE'), primary_key=True)
-    userId: Mapped[int] = mapped_column("userid", ForeignKey('app_user.userid', ondelete='CASCADE'), primary_key=True)
+    movie_id: Mapped[int] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
+    user_id: Mapped[int] = mapped_column("user_id", ForeignKey('app_user.user_id', ondelete='CASCADE'), primary_key=True)
     rating: Mapped[int] = mapped_column(SmallInteger, nullable=False)
     recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
 
@@ -63,9 +63,9 @@ class Rating(Base):
 class Tag(Base):
     __tablename__ = 'tag'
 
-    tagId: Mapped[int] = mapped_column("tagid", primary_key=True, autoincrement=True)
-    movieId: Mapped[int | None] = mapped_column("movieid", ForeignKey('movie.movieid', ondelete='CASCADE'), nullable=True)
-    userId: Mapped[int | None] = mapped_column("userid", ForeignKey('app_user.userid', ondelete='CASCADE'), nullable=True)
+    tag_id: Mapped[int] = mapped_column("tag_id", primary_key=True, autoincrement=True)
+    movie_id: Mapped[int | None] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), nullable=True)
+    user_id: Mapped[int | None] = mapped_column("user_id", ForeignKey('app_user.user_id', ondelete='CASCADE'), nullable=True)
     tag: Mapped[str | None] = mapped_column(Text, nullable=True)
     recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
 
