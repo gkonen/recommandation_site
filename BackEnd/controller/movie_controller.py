@@ -13,4 +13,4 @@ class MovieController:
         if movie is not None:
             return {"id": movie.movie_id, "title": movie.title, "year": movie.year}, 200
         else:
-            return {"error" : "Movie not found"}, 400 
+            return {"error" : "Movie not found"}, 400
