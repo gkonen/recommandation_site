@@ -9,5 +9,5 @@ class MovieRepository:
         return movies_list
 
     def get_movie(self, movie_id):
-        movie = self.session.query(Movie).filter(Movie.movieId == movie_id).first()
+        movie = self.session.query(Movie).filter(Movie.movie_id == movie_id).first()
         return movie

@@ -8,4 +8,4 @@ class UserRepository:
         return self.session.query(AppUser).all()
 
     def get_user(self, user_id):
-        return self.session.query(AppUser).filter(AppUser.userId == user_id).first()
+        return self.session.query(AppUser).filter(AppUser.user_id == user_id).first()
