@@ -1,0 +1,97 @@
+.movie-card {
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  max-width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--surface);
+  color: var(--on-surface);
+
+  .movie-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 2px solid var(--surface-variant);
+    gap: 10px;
+
+    .movie-title {
+      font-size: 1.5em;
+      color: var(--on-surface);
+      padding-bottom: 0.3rem;
+    }
+
+    .movie-rating {
+      font-size: 1.2rem;
+      padding-bottom: 0.3rem;
+      font-weight: bold;
+
+      .rating-score {
+        color: var(--on-surface);
+      }
+    }
+  }
+
+  .movie-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+
+  .movie-years{
+    padding: 0.2rem 0;
+    display: flex;
+    justify-content: space-between;
+
+    .years-label {
+      font-weight: bold;
+      color: var(--on-surface-variant);
+      display: block;
+    }
+  }
+
+  /* Conteneurs Genres et Tags */
+  .movie-genres, .movie-tags, .movie-years {
+
+    .genre-label, .tag-label{
+      font-weight: bold;
+      color: var(--on-surface-variant);
+      display: block;
+    }
+  }
+  /* Conteneurs genre-label et tag-label */
+  .tags-list, .genres-list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    gap: 5px;
+    padding: 0.2rem;
+
+    /* genre-label */
+    .genre-item {
+      display: inline-block;
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+
+    /* tag-label */
+    .tag-item {
+      display: inline-block;
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+
+  }
+}
+
+
+
+
+
+
+
