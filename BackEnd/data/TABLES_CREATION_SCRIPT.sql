@@ -16,7 +16,7 @@ CREATE TABLE app_user(
 );
 
 -- /!\ After populating the app_user table run:
--- SELECT setval(pg_get_serial_sequence('app_user', 'userid'), (SELECT MAX(userid) FROM app_user));
+-- SELECT setval(pg_get_serial_sequence('app_user', 'user_id'), (SELECT MAX(user_id) FROM app_user));
 
 CREATE TABLE movie_genre(
 	movie_id INT,

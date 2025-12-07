@@ -11,6 +11,6 @@ class MovieController:
     def get_movie(self, movie_id):
         movie = self.__repository.get_movie(movie_id)
         if movie is not None:
-            return {"id": movie.movie_id, "title": movie.title}, 200
+            return {"id": movie.movie_id, "title": movie.title, "year": movie.year}, 200
         else:
-            return {"error" : "Movie not found"}, 400
+            return {"error" : "Movie not found"}, 400 
