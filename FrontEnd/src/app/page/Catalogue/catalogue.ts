@@ -1,11 +1,13 @@
 import {Component, signal} from '@angular/core';
 import {CardFilm} from '../../component/card-film/card-film';
 import {Movie} from '../../api/MovieModel';
+import {Pagination} from '../../component/pagination/pagination';
 
 @Component({
   selector: 'app-catalogue',
   imports: [
-    CardFilm
+    CardFilm,
+    Pagination
   ],
   templateUrl: './catalogue.html',
   styleUrl: './catalogue.scss',
