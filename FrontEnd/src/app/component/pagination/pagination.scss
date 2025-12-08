@@ -1,0 +1,45 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 2rem 0;
+
+  &-button {
+    min-width: 2rem;
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--outline-variant);
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    color: var(--on-surface);
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--surface-variant);
+    }
+
+    &:active {
+      background: var(--primary-container);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      color: var(--on-surface-variant);
+    }
+
+    &.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+  }
+
+  &_dots {
+    color: var(--outline);
+    padding: 0 0.25rem;
+  }
+}
