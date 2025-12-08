@@ -21,4 +21,10 @@ export class Catalogue {
     genres: ["Sci-Fi", "Action"],
     tags: ["must-watch"]
   });
+
+  readonly currentPage = signal<number>(1);
+
+  protected onPageChange($event: number) {
+    this.currentPage.set($event);
+  }
 }

@@ -1,4 +1,5 @@
 <p>catalogue works!</p>
-
-<app-pagination></app-pagination>
-<app-card-film [movie]="movies()"></app-card-film>
+<span>Page {{ currentPage() }}</span>
+<app-pagination (changePage)="onPageChange($event)"
+                [currentPage]="currentPage()"></app-pagination>
+<app-card-film  [movie]="movies()"></app-card-film>
