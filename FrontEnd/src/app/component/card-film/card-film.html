@@ -8,10 +8,12 @@
     </div>
   </div>
 
-  <img src="/missing_product.jpg" alt="{{ movie().title }}" class="movie-image" />
+  <div class="movie-image-container">
+    <img src="/picture.svg" alt="{{ movie().title }}" class="movie-image" />
+  </div>
 
   <div class="movie-years">
-    <span class="years-label">Years :</span>
+    <span class="years-label">Year :</span>
     <span class="years-value">{{ movie().year }}</span>
   </div>
 
