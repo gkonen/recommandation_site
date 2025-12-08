@@ -5,7 +5,7 @@ from database.config.db_engine import DBEngine
 # database tables names in proper insertion order
 DB_TABLES = ['genre', 'movie', 'movie_genre', 'app_user', 'tag', 'rating']
 
-PKL_PATH = 'data/pickle_files/'
+PKL_PATH = 'pickle_files/'
 ENGINE = DBEngine.get_engine()
 
 def truncate_tables():

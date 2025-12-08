@@ -1,9 +1,8 @@
 import numpy as np
 import pandas as pd
 
-
-CSV_PATH = 'data/csv_files/'
-PKL_PATH = 'data/pickle_files/'
+CSV_PATH = 'csv_files/'
+PKL_PATH = 'pickle_files/'
 
 
 def prep_genres_df() -> pd.DataFrame:
