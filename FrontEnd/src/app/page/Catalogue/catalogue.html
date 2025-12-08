@@ -2,4 +2,4 @@
 <span>Page {{ currentPage() }}</span>
 <app-pagination (changePage)="onPageChange($event)"
                 [currentPage]="currentPage()"></app-pagination>
-<app-card-film  [movie]="movies()"></app-card-film>
+<app-card-film  [movie]="movies()[0]"></app-card-film>

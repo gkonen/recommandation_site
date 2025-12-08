@@ -1,9 +1,10 @@
-
 from flask import Flask
+from flask_cors import CORS
 from router.movie_route import movie_route
 from router.user_route import user_route
 
 app = Flask(__name__)
+CORS(app)
 app.register_blueprint(movie_route)
 app.register_blueprint(user_route)
 
