@@ -1,0 +1,32 @@
+<span>Page {{ currentPage() }} of {{ nbPages() }}</span>
+<nav class="pagination">
+  <button class="pagination-button" (click)="onPreviousClick()">Previous</button>
+  <button class="pagination-button" (click)="goToPage(1)">1</button>
+
+  @if (currentPage() > 4){
+    <span class="pagination_dots">...</span>
+  }
+
+  @if (currentPage() > 2 && currentPage() != 3 ){
+    <button class="pagination-button" (click)="goToPage(currentPage()-2)">{{ currentPage()-2 }}</button>
+  }
+  @if ( currentPage() > 1 && currentPage() != 2){
+    <button class="pagination-button" (click)="goToPage(currentPage()-1)">{{ currentPage()-1 }}</button>
+  }
+  @if (currentPage() != 1){
+    <button class="pagination-button" (click)="goToPage(currentPage())">{{ currentPage() }}</button>
+  }
+  @if (currentPage() < nbPages()-1){
+    <button class="pagination-button" (click)="goToPage(currentPage()+1)">{{ currentPage()+1 }}</button>
+  }
+  @if (currentPage() < nbPages()-2){
+    <button class="pagination-button" (click)="goToPage(currentPage()+2)">{{ currentPage()+2 }}</button>
+  }
+
+  @if (currentPage()<nbPages()-2){
+    <span class="pagination_dots">...</span>
+  }
+
+  <button class="pagination-button" (click)="goToPage(nbPages())">{{ nbPages() }}</button>
+  <button class="pagination-button" (click)="onNextClick()">Next</button>
+</nav>
