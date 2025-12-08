@@ -1,0 +1,11 @@
+<div class="slider-container"
+     (mousedown)="onDragStart($event)"
+     (mousemove)="onDragMove($event)"
+     (mouseup)="onDragEnd()"
+     (mouseleave)="onDragEnd()">
+  <div class="items-wrapper" #itemsWrapper>
+    @for (movie of movies_list(); track movie.id) {
+      <app-card-movie [movie]="movie"></app-card-movie>
+    }
+  </div>
+</div>

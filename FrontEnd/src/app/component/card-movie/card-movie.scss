@@ -12,16 +12,22 @@
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 2px solid var(--surface-variant);
-    gap: 10px;
+    gap: 0.5rem;
 
     .movie-title {
-      font-size: 1.5em;
+      font-size: 1.2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
       color: var(--on-surface);
       padding-bottom: 0.3rem;
     }
 
     .movie-rating {
+      width: 15%;
       font-size: 1.2rem;
+      text-align: right;
       padding-bottom: 0.3rem;
       font-weight: bold;
 
@@ -42,6 +48,7 @@
     object-fit: cover;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
+    pointer-events: none;
   }
 
   .movie-years{

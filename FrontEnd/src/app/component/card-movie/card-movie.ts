@@ -4,15 +4,13 @@ import {Movie} from '../../api/MovieModel';
 
 
 @Component({
-  selector: 'app-card-film',
+  selector: 'app-card-movie',
   imports: [],
-  templateUrl: './card-film.html',
-  styleUrl: './card-film.scss',
+  templateUrl: './card-movie.html',
+  styleUrl: './card-movie.scss',
 })
-export class CardFilm {
+export class CardMovie {
 
   readonly movie = input.required<Movie>()
-
-
 
 }
