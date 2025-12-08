@@ -1,5 +1,14 @@
-<p>catalogue works!</p>
-<span>Page {{ currentPage() }}</span>
+<h2>Recommended Movies</h2>
+<div class="container">
+  <app-slider-movie [movies_list]="movies()"></app-slider-movie>
+</div>
+
+<h2>Catalogue</h2>
 <app-pagination (changePage)="onPageChange($event)"
                 [currentPage]="currentPage()"></app-pagination>
-<app-card-film  [movie]="movies()[0]"></app-card-film>
+<div class="container movie-grid">
+  @for (movie of movies(); track movie.id) {
+    <app-card-movie [movie]="movie"></app-card-movie>
+  }
+</div>
+

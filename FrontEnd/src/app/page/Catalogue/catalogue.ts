@@ -1,14 +1,16 @@
 import {Component, inject, signal} from '@angular/core';
-import {CardFilm} from '../../component/card-film/card-film';
+import {CardMovie} from '../../component/card-movie/card-movie';
 import {Movie} from '../../api/MovieModel';
 import {Pagination} from '../../component/pagination/pagination';
 import {HttpService} from '../../api/service/http-service';
+import {SliderMovie} from '../../component/slider-movie/slider-movie';
 
 @Component({
   selector: 'app-catalogue',
   imports: [
-    CardFilm,
-    Pagination
+    CardMovie,
+    Pagination,
+    SliderMovie
   ],
   templateUrl: './catalogue.html',
   styleUrl: './catalogue.scss',
