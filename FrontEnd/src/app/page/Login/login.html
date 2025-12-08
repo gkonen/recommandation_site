@@ -1,0 +1,19 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Connexion</h2>
+
+    <form class="login-form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+      </div>
+
+      <button type="submit" class="md-button">Login</button>
+    </form>
+  </div>
+</div>

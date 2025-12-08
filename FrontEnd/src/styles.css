@@ -1,1 +1,120 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: rgb(0 105 115);
+  --on-primary: rgb(255 255 255);
+  --primary-container: rgb(0 160 176);
+  --on-primary-container: rgb(0 47 53);
+
+  /* Secondaries color */
+  --secondary: rgb(61 101 107);
+  --on-secondary: rgb(255 255 255);
+  --secondary-container: rgb(189 231 238);
+  --on-secondary-container: rgb(65 105 111);
+
+  /* State's colors */
+  /* Error */
+  --error: rgb(186 26 26);
+  --on-error: rgb(255 255 255);
+  --error-container: rgb(255 218 214);
+  --on-error-container: rgb(147 0 10);
+  /* Success */
+  --success: rgb(46 125 50);
+  --on-success: rgb(255 255 255);
+  --success-container: rgb(200 230 201);
+  --on-success-container: rgb(27 94 32);
+  /* Warning */
+  --warning: rgb(237 108 2);
+  --on-warning: rgb(255 255 255);
+  --warning-container: rgb(255 224 178);
+  --on-warning-container: rgb(142 65 0);
+
+  /* Surfaces */
+  --background: rgb(245 250 251);
+  --on-background: rgb(23 29 29);
+  --surface: rgb(245 250 251);
+  --on-surface: rgb(23 29 29);
+  --surface-variant: rgb(216 229 231);
+  --on-surface-variant: rgb(61 73 75);
+
+  /* Bordures */
+  --outline: rgb(109 121 123);
+  --outline-variant: rgb(188 201 203);
+  --border-radius: 1rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+html, body {
+  margin:0;
+  padding:0;
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: var(--background);
+  height: 100%;
+}
+
+ /* style button */
+.md-button {
+  align-items: center;
+  appearance: none;
+  border-radius: var(--border-radius);
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 1px -2px, rgba(0, 0, 0, .14) 0 2px 2px 0, rgba(0, 0, 0, .12) 0 1px 5px 0;
+  box-sizing: border-box;
+  color: var(--on-primary);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: inherit;
+  font-size: .875rem;
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  letter-spacing: .0892857em;
+  line-height: normal;
+  min-width: 64px;
+  outline: none;
+  overflow: visible;
+  padding: 0 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 280ms cubic-bezier(.4, 0, .2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  will-change: transform, opacity;
+}
+
+.md-button:not(:disabled) {
+  background-color: var(--primary);
+}
+
+.md-button:hover:not(:disabled) {
+  background-color: var(--primary-container);
+  box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+}
+
+.md-button:focus {
+  box-shadow: rgba(0, 0, 0, .2) 0 2px 4px -1px, rgba(0, 0, 0, .14) 0 4px 5px 0, rgba(0, 0, 0, .12) 0 1px 10px 0;
+}
+
+.md-button:active:not(:disabled) {
+  background-color: var(--on-primary-container);
+  box-shadow: rgba(0, 0, 0, .2) 0 5px 5px -3px, rgba(0, 0, 0, .14) 0 8px 10px 1px, rgba(0, 0, 0, .12) 0 3px 14px 2px;
+}
+
+.md-button:disabled {
+  background-color: var(--surface-variant);
+  box-shadow: none;
+  color: var(--on-surface-variant);
+  cursor: not-allowed;
+  opacity: 0.6;
+  pointer-events: none;
+}
