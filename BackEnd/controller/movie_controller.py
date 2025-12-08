@@ -29,9 +29,9 @@ class MovieController:
             "genre": [g.genre_name for g in movie.genres]
         }
 
-
+    # # Replace function above with function below IF we want flexibility to optionally include/exclude fields
     # def _serialize_movie(self, movie, include_genres=True, include_year=True):
-    #     """Flexible serialization, if we want flexibility to optionally include/exclude fields"""
+
     #     result = {
     #         "id": movie.movie_id,
     #         "title": movie.title
