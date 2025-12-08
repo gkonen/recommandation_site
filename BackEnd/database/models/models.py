@@ -1,41 +1,41 @@
 from sqlalchemy import ForeignKey, SmallInteger, BigInteger, Text
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, MappedAsDataclass
 
 
-class Base(DeclarativeBase):
+class Base(DeclarativeBase, MappedAsDataclass):
     pass
 
 #region ENTITIES
 class Movie(Base):
     __tablename__ = 'movie'
 
-    movie_id: Mapped[int] = mapped_column("movie_id", primary_key=True)
+    movie_id: Mapped[int] = mapped_column("movie_id", primary_key=True, init=False)
     title: Mapped[str] = mapped_column(Text, nullable=False)
-    year: Mapped[int | None] = mapped_column(nullable=True)
+    year: Mapped[int | None] = mapped_column(nullable=True, default=None)
 
-    genres: Mapped[list['Genre']] = relationship(secondary='movie_genre', back_populates='movies')
-    ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan')
-    tags: Mapped[list['Tag']] = relationship(back_populates='movie', cascade='all, delete-orphan')
+    genres: Mapped[list['Genre']] = relationship(secondary='movie_genre', back_populates='movies', default_factory=list)
+    ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
+    tags: Mapped[list['Tag']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
 
 
 class Genre(Base):
     __tablename__ = 'genre'
 
-    genre_id: Mapped[int] = mapped_column("genre_id", primary_key=True, autoincrement=True)
+    genre_id: Mapped[int] = mapped_column("genre_id", primary_key=True, autoincrement=True, init=False)
     genre_name: Mapped[str] = mapped_column("genre_name", Text, nullable=False)
 
-    movies: Mapped[list['Movie']] = relationship(secondary='movie_genre', back_populates='genres')
+    movies: Mapped[list['Movie']] = relationship(secondary='movie_genre', back_populates='genres', default_factory=list)
 
 
 class AppUser(Base):
     __tablename__ = 'app_user'
 
-    user_id: Mapped[int] = mapped_column("user_id", primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column("user_id", primary_key=True, autoincrement=True, init=False)
     username: Mapped[str] = mapped_column(Text, nullable=False)
     pw: Mapped[str] = mapped_column(Text, nullable=False)
 
-    ratings: Mapped[list['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan')
-    tags: Mapped[list['Tag']] = relationship(back_populates='user', cascade='all, delete-orphan')
+    ratings: Mapped[list['Rating']] = relationship(back_populates='user', cascade='all, delete-orphan', default_factory=list)
+    tags: Mapped[list['Tag']] = relationship(back_populates='user', cascade='all, delete-orphan', default_factory=list)
 
 
 # Relational table
@@ -54,21 +54,21 @@ class Rating(Base):
     movie_id: Mapped[int] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
     user_id: Mapped[int] = mapped_column("user_id", ForeignKey('app_user.user_id', ondelete='CASCADE'), primary_key=True)
     rating: Mapped[int] = mapped_column(SmallInteger, nullable=False)
-    recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True, default=None)
 
-    movie: Mapped['Movie'] = relationship(back_populates='ratings')
-    user: Mapped['AppUser'] = relationship(back_populates='ratings')
+    movie: Mapped['Movie'] = relationship(back_populates='ratings', init=False)
+    user: Mapped['AppUser'] = relationship(back_populates='ratings', init=False)
 
 
 class Tag(Base):
     __tablename__ = 'tag'
 
-    tag_id: Mapped[int] = mapped_column("tag_id", primary_key=True, autoincrement=True)
-    movie_id: Mapped[int | None] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), nullable=True)
-    user_id: Mapped[int | None] = mapped_column("user_id", ForeignKey('app_user.user_id', ondelete='CASCADE'), nullable=True)
-    tag: Mapped[str | None] = mapped_column(Text, nullable=True)
-    recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True)
+    tag_id: Mapped[int] = mapped_column("tag_id", primary_key=True, autoincrement=True, init=False)
+    movie_id: Mapped[int | None] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), nullable=True, default=None)
+    user_id: Mapped[int | None] = mapped_column("user_id", ForeignKey('app_user.user_id', ondelete='CASCADE'), nullable=True, default=None)
+    tag: Mapped[str | None] = mapped_column(Text, nullable=True, default=None)
+    recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True, default=None)
 
-    movie: Mapped['Movie'] = relationship(back_populates='tags')
-    user: Mapped['AppUser'] = relationship(back_populates='tags')
+    movie: Mapped['Movie'] = relationship(back_populates='tags', init=False)
+    user: Mapped['AppUser'] = relationship(back_populates='tags', init=False)
 #endregion
