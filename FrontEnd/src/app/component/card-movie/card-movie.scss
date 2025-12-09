@@ -63,7 +63,6 @@
     }
   }
 
-  /* Conteneurs Genres et Tags */
   .movie-genres, .movie-tags, .movie-years {
 
     .genre-label, .tag-label{
@@ -72,7 +71,7 @@
       display: block;
     }
   }
-  /* Conteneurs genre-label et tag-label */
+
   .tags-list, .genres-list {
     display: flex;
     flex-flow: row wrap;
@@ -80,7 +79,6 @@
     gap: 5px;
     padding: 0.2rem;
 
-    /* genre-label */
     .genre-item {
       display: inline-block;
       background-color: var(--secondary-container);
@@ -89,7 +87,6 @@
       border-radius: 5px;
     }
 
-    /* tag-label */
     .tag-item {
       display: inline-block;
       background-color: var(--primary-container);

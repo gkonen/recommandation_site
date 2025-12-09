@@ -1,5 +1,9 @@
 <div>
   <h1>Film Recommendation</h1>
-  <Button class="md-button" (click)="onConnectClick()"> {{ connectedState() ? 'Disconnect' : 'Connect' }}</Button>
+  <div class="button-container">
+    <Button class="md-button" (click)="onConnectClick()"> {{ connectedState() ? 'Disconnect' : 'Connect' }}</Button>
+    <Button class="md-button register">{{ connectedState() ? 'Profil' : 'Register' }}</Button>
+  </div>
+
 </div>
 
