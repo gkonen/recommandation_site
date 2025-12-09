@@ -4,15 +4,30 @@ div{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-right: 5rem;
 
   h1{
-    padding: 1rem 5rem;
+    padding: 1rem 3rem;
     color: var(--on-primary-container);
   }
-  button:hover{
-    background-color: var(--secondary-container);
-    color: var(--on-secondary-container);
-  }
 
+  .button-container{
+    display: flex;
+    gap: 1rem;
+    padding-right: 3rem;
+
+    .register{
+      background-color: var(--tertiary);
+      color: var(--on-tertiary);
+
+      &:hover{
+        background-color: var(--tertiary-container);
+        color: var(--on-tertiary-container);
+      }
+    }
+
+    button:hover{
+      background-color: var(--secondary-container);
+      color: var(--on-secondary-container);
+    }
+  }
 }

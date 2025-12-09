@@ -11,6 +11,12 @@
   --secondary-container: rgb(189 231 238);
   --on-secondary-container: rgb(65 105 111);
 
+  /* Tertiary color */
+  --tertiary: rgb(123 97 178);
+  --on-tertiary: rgb(255 255 255);
+  --tertiary-container: rgb(232 221 255);
+  --on-tertiary-container: rgb(47 29 78);
+
   /* State's colors */
   /* Error */
   --error: rgb(186 26 26);
