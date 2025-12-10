@@ -20,7 +20,7 @@ class MovieRepository:
             genre_name: Optional string for filtering by genre name
             page: Page number (starts at 1)
             per_page: Number of results per page
-            
+
         Returns:
             Tuple of (list of movies, total count)
         """
@@ -39,9 +39,9 @@ class MovieRepository:
 
         # Get total count before pagination
         total = query.count()
-        
+
         # Apply pagination
         offset = (page - 1) * per_page
         movies = query.offset(offset).limit(per_page).all()
-        
+
         return movies, total

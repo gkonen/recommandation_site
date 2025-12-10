@@ -29,9 +29,10 @@ class MovieController:
         )
 
         total_pages = math.ceil(total / per_page) if total > 0 else 0
+        serialized_movies = [ self._serialize_movie(m) for m in list_movies[:50] ]
 
         return {
-            "movies": [ self._serialize_movie(m) for m in movies ],
+            "movies": serialized_movies,
             "pagination": {
                 "page": page,
                 "per_page": per_page,
@@ -51,9 +52,14 @@ class MovieController:
             return {"error" : "Movie not found"}, 400
 
     def _serialize_movie(self, movie):
+        score = movie.score.rating
+        genre_list = [g.genre_name for g in movie.genres]
+        tags = [tag.clean_tag for tag in movie.tags]
         return {
             "id": movie.movie_id,
             "title": movie.title,
             "year": movie.year,
-            "genres": [g.genre_name for g in movie.genres]
+            "score": score,
+            "genres": genre_list,
+            "tags" : tags
         }
