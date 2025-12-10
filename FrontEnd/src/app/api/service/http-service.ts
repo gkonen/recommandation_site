@@ -11,13 +11,15 @@ export class HttpService {
   private http = inject(HttpClient);
 
   get_movies(page: number = 1) {
-    return this.http.get<ResponseMovie>(this.url + 'movie').pipe(
+    return this.http.get<ResponseMovie>(this.url + 'movies', {
+      params: {page: page.toString()}
+    }).pipe(
       map(response =>
         response.movies.map(movie => ({
             id: movie.id,
             title: movie.title,
             year: movie.year,
-            rating: movie.rating,
+            score: Math.round(movie.score * 10)/20,
             genres: movie.genres,
             tags: movie.tags
           }))

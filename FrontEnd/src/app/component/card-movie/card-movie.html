@@ -4,7 +4,7 @@
       {{ movie().title }}
     </h2>
     <div class="movie-rating">
-      <span class="rating-score"> {{ movie().rating  }} </span> / 5
+      <span class="rating-score"> {{ movie().score }} / 5 </span>
     </div>
   </div>
 
@@ -20,7 +20,7 @@
   <div class="movie-genres">
     <span class="genre-label">Genres:</span>
     <div class="genres-list">
-      @for (genre of movie().genres; track movie()?.id) {
+      @for (genre of movie().genres; track $index) {
         <span class="genre-item"> {{ genre }} </span>
       }
     </div>
@@ -29,7 +29,7 @@
   <div class="movie-tags">
     <span class="tag-label">Tags:</span>
     <div class="tags-list">
-      @for (tag of movie().tags; track movie()?.id) {
+      @for (tag of movie().tags; track $index) {
         <span class="tag-item"> {{ tag }} </span>
       }
     </div>

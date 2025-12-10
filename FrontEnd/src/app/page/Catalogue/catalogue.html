@@ -1,13 +1,13 @@
 <h2>Recommended Movies</h2>
 <div class="container">
-  <app-slider-movie [movies_list]="movies()"></app-slider-movie>
+  <app-slider-movie [movies_list]="recommendMovie()"></app-slider-movie>
 </div>
 
 <h2>Catalogue</h2>
 <app-pagination (changePage)="onPageChange($event)"
                 [currentPage]="currentPage()"></app-pagination>
 <div class="container movie-grid">
-  @for (movie of movies(); track movie.id) {
+  @for (movie of catalogMovie(); track movie.id) {
     <app-card-movie [movie]="movie"></app-card-movie>
   }
 </div>

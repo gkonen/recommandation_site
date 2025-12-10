@@ -1,4 +1,4 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {CardMovie} from '../../component/card-movie/card-movie';
 import {Movie} from '../../api/MovieModel';
 import {Pagination} from '../../component/pagination/pagination';
@@ -15,32 +15,28 @@ import {SliderMovie} from '../../component/slider-movie/slider-movie';
   templateUrl: './catalogue.html',
   styleUrl: './catalogue.scss',
 })
-export class Catalogue {
+export class Catalogue implements OnInit {
   private httpService = inject(HttpService);
 
-  readonly movies = signal<Movie[]>([{
-    id: 1,
-    title: "The Matrix",
-    year: 1999,
-    rating: 4.7,
-    genres: ["Sci-Fi", "Action"],
-    tags: ["must-watch"]
-  }]);
+  readonly catalogMovie = signal<Movie[]>([]);
+  readonly recommendMovie = signal<Movie[]>([]);
+  readonly currentPage = signal<number>(1);
 
   ngOnInit() {
     this.loadMovies();
   }
 
-  loadMovies() {
-    this.httpService.get_movies().subscribe((movies : Movie[]) => {
+  loadMovies(page: number= 1) {
+    this.httpService.get_movies(page).subscribe((movies : Movie[]) => {
       console.log(movies);
-      this.movies.set(movies);
+      this.catalogMovie.set(movies);
+      //this.recommendMovie.set(movies);
+      this.currentPage.set(page);
     })
   }
 
-  readonly currentPage = signal<number>(1);
-
   protected onPageChange($event: number) {
-    this.currentPage.set($event);
+    this.loadMovies($event);
   }
+
 }
