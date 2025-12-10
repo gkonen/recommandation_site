@@ -11,11 +11,11 @@ class Movie(Base):
 
     movie_id: Mapped[int] = mapped_column("movie_id", primary_key=True, init=False)
     title: Mapped[str] = mapped_column(Text, nullable=False)
-    year: Mapped[int | None] = mapped_column(nullable=True, default=None)
+    year: Mapped[int | None] = mapped_column(nullable=True)
 
     genres: Mapped[list['Genre']] = relationship(secondary='movie_genre', back_populates='movies', default_factory=list)
     #ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
-    score: Mapped['MovieRating'] = relationship(back_populates='movie', uselist=False, viewonly=True)
+    score: Mapped['MovieRating| None'] = relationship(back_populates='movie', uselist=False, viewonly=True)
     tags: Mapped[list['MovieTag']] = relationship(back_populates='movie',  viewonly=True)
 
 

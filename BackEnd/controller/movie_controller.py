@@ -9,7 +9,7 @@ class MovieController:
     def get_all_movies(self, title=None, year=None, genre_name=None, page=1, per_page=50):
         """
         Get movies with optional filters and pagination.
-        
+
         Args:
             title: Optional string for filtering by movie title (partial match, case-insensitive)
             year: Optional integer for filtering by release year
