@@ -6,7 +6,7 @@
 <h2>Catalogue</h2>
 <app-search-filter (onSearchFilter)="onSearchFilter($event)"></app-search-filter>
 <app-pagination (changePage)="onPageChange($event)"
-                [currentPage]="currentPage()"></app-pagination>
+                [paginationDetail]="pagination()"></app-pagination>
 <div class="container movie-grid">
   @for (movie of catalogMovie(); track movie.id) {
     <app-card-movie [movie]="movie"></app-card-movie>

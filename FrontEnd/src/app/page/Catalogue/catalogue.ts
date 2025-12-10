@@ -6,6 +6,8 @@ import {HttpService} from '../../api/service/http-service';
 import {SliderMovie} from '../../component/slider-movie/slider-movie';
 import {SearchFilter} from '../../component/search-filter/search-filter';
 import {MovieFilter} from '../../component/search-filter/MovieFilter';
+import {ResponseCatalogue} from '../../api/ResponseMovieModel';
+import {PaginationDetail} from '../../api/service/PaginationDetailModel';
 
 @Component({
   selector: 'app-catalogue',
@@ -24,27 +26,34 @@ export class Catalogue implements OnInit {
 
   readonly catalogMovie = signal<Movie[]>([]);
   readonly recommendMovie = signal<Movie[]>([]);
-  readonly currentPage = signal<number>(1);
+  readonly pagination = signal<PaginationDetail>({
+    has_next: false,
+    has_prev: false,
+    page: 1,
+    per_page: 50,
+    total: 0,
+    total_pages: 0
+  });
+  //readonly currentPage = signal<number>(1);
 
   ngOnInit() {
     this.loadMovies();
   }
 
   loadMovies(page: number= 1) {
-    this.httpService.get_movies(page).subscribe((movies : Movie[]) => {
-      console.log(movies);
-      this.catalogMovie.set(movies);
+    this.httpService.get_movies(page).subscribe((response : ResponseCatalogue) => {
+      this.catalogMovie.set(response.movies);
       //this.recommendMovie.set(movies);
-      this.currentPage.set(page);
+      this.pagination.set(response.pagination);
     })
   }
 
   protected onSearchFilter(filters: any, page: number = 1) {
     console.log(filters);
     this.searchFilter.set(filters);
-    this.httpService.get_movie_by_filter(filters, page).subscribe((movies: Movie[]) => {
-        this.catalogMovie.set(movies);
-        this.currentPage.set(page);
+    this.httpService.get_movie_by_filter(filters, page).subscribe((response : ResponseCatalogue) => {
+        this.catalogMovie.set(response.movies);
+      this.pagination.set(response.pagination);
       }
     )
   }

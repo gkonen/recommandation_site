@@ -1,6 +1,6 @@
 
 <nav class="pagination">
-  <button class="pagination-button" (click)="onPreviousClick()" [disabled]="currentPage() === 1">Previous</button>
+  <button class="pagination-button" (click)="onPreviousClick()" [disabled]="!paginationDetail().has_prev">Previous</button>
   <button class="pagination-button" [class.active]="currentPage() === 1" (click)="goToPage(1)">1</button>
 
 
@@ -28,5 +28,5 @@
     <button class="pagination-button" [class.active]="currentPage() === nbPages()" (click)="goToPage(nbPages())">{{nbPages()}}</button>
   }
 
-  <button class="pagination-button" (click)="onNextClick()" [disabled]="currentPage() === nbPages()">Next</button>
+  <button class="pagination-button" (click)="onNextClick()" [disabled]="!paginationDetail().has_next">Next</button>
 </nav>
