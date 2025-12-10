@@ -3,7 +3,7 @@
     <label for="genre">Genre :</label>
     <select id="genre" formControlName="genre">
       <option value="">Tous les genres</option>
-      @for (genre of availableGenres; track genre) {
+      @for (genre of availableGenres(); track genre) {
         <option [value]="genre">{{ genre }}</option>
       }
     </select>

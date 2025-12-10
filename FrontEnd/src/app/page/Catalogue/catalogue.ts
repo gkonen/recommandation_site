@@ -25,6 +25,7 @@ export class Catalogue implements OnInit {
   private searchFilter = signal<MovieFilter | null>(null);
 
   readonly catalogMovie = signal<Movie[]>([]);
+  readonly genreMovie = signal<string[]>([]);
   readonly recommendMovie = signal<Movie[]>([]);
   readonly pagination = signal<PaginationDetail>({
     has_next: false,
@@ -38,6 +39,13 @@ export class Catalogue implements OnInit {
 
   ngOnInit() {
     this.loadMovies();
+    this.loadGenre();
+  }
+
+  loadGenre() {
+    this.httpService.get_all_genres().subscribe((genres) => {
+      this.genreMovie.set(genres);
+    })
   }
 
   loadMovies(page: number= 1) {
@@ -65,5 +73,4 @@ export class Catalogue implements OnInit {
       this.loadMovies($event);
     }
   }
-
 }
