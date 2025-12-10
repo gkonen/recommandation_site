@@ -31,9 +31,15 @@ class UserController:
         user = self.__repository.get_user_by_username(username)
         
         if user is None:
+            # print(f"DEBUG: User '{username}' not found in database")
             return {"logged": False, "id": None}, 401
+
+        # print(f"DEBUG: User found - ID: {user.user_id}, Username: {user.username}")
+        # print(f"DEBUG: Password from DB: '{user.pw}'")
+        # print(f"DEBUG: Password provided: '{password}'")
+        # print(f"DEBUG: Match: {user.pw == password}")
         
-        if user.password == password:
+        if user.pw == password:
             return {"logged": True, "id": user.user_id}, 200
         else:
             return {"logged": False, "id": None}, 401

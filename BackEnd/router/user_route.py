@@ -41,3 +41,18 @@ def login(controller):
     password = data.get('password')
     
     return controller.authenticate_user(username, password)
+
+
+# ### ROUTE FOR TESTING
+# @user_route.route('/debug/<username>')
+# @with_session(factory_func=UserFactory.get_controller)
+# def debug_user(controller, username):
+#     user = controller._UserController__repository.get_user_by_username(username)
+#     if user:
+#         return {
+#             "found": True,
+#             "user_id": user.user_id,
+#             "username": user.username,
+#             "password_in_db": user.pw  # Shows what's actually stored
+#         }
+#     return {"found": False}, 404
