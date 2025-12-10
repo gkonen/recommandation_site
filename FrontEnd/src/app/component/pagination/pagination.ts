@@ -1,4 +1,5 @@
-import {Component, input, output, signal} from '@angular/core';
+import {Component, computed, input, output} from '@angular/core';
+import {PaginationDetail} from '../../api/service/PaginationDetailModel';
 
 @Component({
   selector: 'app-pagination',
@@ -8,13 +9,12 @@ import {Component, input, output, signal} from '@angular/core';
 })
 export class Pagination {
 
-  readonly nbPages = signal<number>(1);
-  readonly currentPage = input.required<number>();
+  readonly paginationDetail = input.required<PaginationDetail>();
+  readonly currentPage = computed( () => this.paginationDetail().page);
+  readonly nbPages = computed(() => this.paginationDetail().total_pages);
   readonly changePage = output<number>()
 
-  ngOnInit() {
-    this.nbPages.set(10);
-  }
+
 
   goToPage(page: number) {
     this.changePage.emit(page);
