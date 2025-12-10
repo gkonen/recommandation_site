@@ -14,9 +14,9 @@ class Movie(Base):
     year: Mapped[int | None] = mapped_column(nullable=True, default=None)
 
     genres: Mapped[list['Genre']] = relationship(secondary='movie_genre', back_populates='movies', default_factory=list)
-    ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
+    #ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
     score: Mapped['MovieRating'] = relationship(back_populates='movie', uselist=False, viewonly=True)
-    tags: Mapped[list['Tag']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
+    tags: Mapped[list['MovieTag']] = relationship(back_populates='movie',  viewonly=True)
 
 
 class Genre(Base):
@@ -57,7 +57,7 @@ class Rating(Base):
     rating: Mapped[int] = mapped_column(SmallInteger, nullable=False)
     recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True, default=None)
 
-    movie: Mapped['Movie'] = relationship(back_populates='ratings', init=False)
+    #movie: Mapped['Movie'] = relationship(back_populates='ratings', init=False)
     user: Mapped['AppUser'] = relationship(back_populates='ratings', init=False)
 
 class MovieRating(Base):
@@ -78,6 +78,15 @@ class Tag(Base):
     tag: Mapped[str | None] = mapped_column(Text, nullable=True, default=None)
     recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True, default=None)
 
-    movie: Mapped['Movie'] = relationship(back_populates='tags', init=False)
+    #movie: Mapped['Movie'] = relationship(back_populates='tags', init=False)
     user: Mapped['AppUser'] = relationship(back_populates='tags', init=False)
+
+class MovieTag(Base):
+    __tablename__ = 'movie_tag_occurrence'
+
+    movie_id: Mapped[int] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
+    clean_tag: Mapped[str] = mapped_column("clean_tag", Text, nullable=False, primary_key=True)
+
+    movie: Mapped['Movie'] = relationship(back_populates='tags')
+
 #endregion
