@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, SmallInteger, BigInteger, Text
+from sqlalchemy import ForeignKey, SmallInteger, BigInteger, FLOAT, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship, MappedAsDataclass
 
 
@@ -15,6 +15,7 @@ class Movie(Base):
 
     genres: Mapped[list['Genre']] = relationship(secondary='movie_genre', back_populates='movies', default_factory=list)
     ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
+    score: Mapped['MovieRating'] = relationship(back_populates='movie', uselist=False, viewonly=True)
     tags: Mapped[list['Tag']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
 
 
@@ -58,6 +59,14 @@ class Rating(Base):
 
     movie: Mapped['Movie'] = relationship(back_populates='ratings', init=False)
     user: Mapped['AppUser'] = relationship(back_populates='ratings', init=False)
+
+class MovieRating(Base):
+    __tablename__ = 'movie_rating'
+
+    movie_id: Mapped[int] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
+    rating: Mapped[int] = mapped_column("score", FLOAT, nullable=False)
+
+    movie: Mapped['Movie'] = relationship(back_populates='score')
 
 
 class Tag(Base):
