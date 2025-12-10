@@ -1,35 +1,46 @@
 from repository.movie_repository import MovieRepository
+import math
 
 
 class MovieController:
     def __init__(self, movie_repository : MovieRepository):
         self.__repository = movie_repository
 
-    def get_all_movies(self, title=None, year=None, genre_name=None):
+    def get_all_movies(self, title=None, year=None, genre_name=None, page=1, per_page=50):
         """
-        Get all movies with optional filters.
+        Get movies with optional filters and pagination.
         
         Args:
             title: Optional string for filtering by movie title (partial match, case-insensitive)
             year: Optional integer for filtering by release year
             genre_name: Optional string for filtering by genre name
+            page: Page number (default 1)
+            per_page: Number of results per page (default 50)
             
         Returns:
-            Dictionary containing list of serialized movies
+            Dictionary containing paginated movies and metadata
         """
-        list_movies = self.__repository.filter_movies(
+        movies, total = self.__repository.filter_movies(
             title=title,
             year=year,
-            genre_name=genre_name
+            genre_name=genre_name,
+            page=page,
+            per_page=per_page
         )
+
+        total_pages = math.ceil(total / per_page) if total > 0 else 0
         
         return {
-            "movies": [
-                self._serialize_movie(m) 
-                for m in list_movies[:50]
-            ]
+            "movies": [ self._serialize_movie(m) for m in movies ],
+            "pagination": {
+                "page": page,
+                "per_page": per_page,
+                "total": total,
+                "total_pages": total_pages,
+                "has_prev": page > 1,
+                "has_next": page < total_pages
+            }
         }
-        # return {"movies": [{"id": m.movie_id, "title": m.title, "genre": [ g.genre_name for g in m.genres]} for m in list_movies[:50]]}
 
     def get_movie(self, movie_id):
         movie = self.__repository.get_movie(movie_id)
@@ -45,19 +56,3 @@ class MovieController:
             "year": movie.year,
             "genres": [g.genre_name for g in movie.genres]
         }
-
-    # # Replace function above with function below IF we want flexibility to optionally include/exclude fields
-    # def _serialize_movie(self, movie, include_genres=True, include_year=True):
-
-    #     result = {
-    #         "id": movie.movie_id,
-    #         "title": movie.title
-    #     }
-        
-    #     if include_year:
-    #         result["year"] = movie.year
-        
-    #     if include_genres:
-    #         result["genre"] = [g.genre_name for g in movie.genres]
-        
-    #     return result

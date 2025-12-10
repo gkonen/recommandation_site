@@ -10,17 +10,19 @@ class MovieRepository:
         movie = self.session.query(Movie).filter(Movie.movie_id == movie_id).first()
         return movie
     
-    def filter_movies(self, title=None, year=None, genre_name=None) -> list[Movie]:
+    def filter_movies(self, title=None, year=None, genre_name=None, page=1, per_page=50) -> tuple[list[Movie], int]:
         """
-        Filter movies by title, year and/or genre. If no filters provided, returns all movies.
+        Filter movies by title, year and/or genre, with pagination. If no filters provided, returns all movies.
         
         Args:
             title: Optional string for filtering by movie title (partial match, case-insensitive)
             year: Optional integer for filtering by release year
             genre_name: Optional string for filtering by genre name
+            page: Page number (starts at 1)
+            per_page: Number of results per page
             
         Returns:
-            List of Movie objects matching the filter criteria
+            Tuple of (list of movies, total count)
         """
         query = self.session.query(Movie)
         
@@ -33,4 +35,13 @@ class MovieRepository:
         if genre_name is not None:
             query = query.join(Movie.genres).filter(Genre.genre_name.ilike(f"%{genre_name}%"))
         
-        return query.distinct().all()
+        query = query.distinct()
+
+        # Get total count before pagination
+        total = query.count()
+        
+        # Apply pagination
+        offset = (page - 1) * per_page
+        movies = query.offset(offset).limit(per_page).all()
+        
+        return movies, total
