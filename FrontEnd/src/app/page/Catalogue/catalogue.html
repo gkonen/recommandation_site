@@ -4,6 +4,7 @@
 </div>
 
 <h2>Catalogue</h2>
+<app-search-filter (onSearchFilter)="onSearchFilter($event)"></app-search-filter>
 <app-pagination (changePage)="onPageChange($event)"
                 [currentPage]="currentPage()"></app-pagination>
 <div class="container movie-grid">

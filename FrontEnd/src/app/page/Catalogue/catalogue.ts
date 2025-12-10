@@ -4,19 +4,23 @@ import {Movie} from '../../api/MovieModel';
 import {Pagination} from '../../component/pagination/pagination';
 import {HttpService} from '../../api/service/http-service';
 import {SliderMovie} from '../../component/slider-movie/slider-movie';
+import {SearchFilter} from '../../component/search-filter/search-filter';
+import {MovieFilter} from '../../component/search-filter/MovieFilter';
 
 @Component({
   selector: 'app-catalogue',
   imports: [
     CardMovie,
     Pagination,
-    SliderMovie
+    SliderMovie,
+    SearchFilter
   ],
   templateUrl: './catalogue.html',
   styleUrl: './catalogue.scss',
 })
 export class Catalogue implements OnInit {
   private httpService = inject(HttpService);
+  private searchFilter = signal<MovieFilter | null>(null);
 
   readonly catalogMovie = signal<Movie[]>([]);
   readonly recommendMovie = signal<Movie[]>([]);
@@ -35,8 +39,22 @@ export class Catalogue implements OnInit {
     })
   }
 
+  protected onSearchFilter(filters: any, page: number = 1) {
+    console.log(filters);
+    this.searchFilter.set(filters);
+    this.httpService.get_movie_by_filter(filters, page).subscribe((movies: Movie[]) => {
+        this.catalogMovie.set(movies);
+        this.currentPage.set(page);
+      }
+    )
+  }
+
   protected onPageChange($event: number) {
-    this.loadMovies($event);
+    if (this.searchFilter() != null) {
+      this.onSearchFilter(this.searchFilter(), $event)
+    } else {
+      this.loadMovies($event);
+    }
   }
 
 }
