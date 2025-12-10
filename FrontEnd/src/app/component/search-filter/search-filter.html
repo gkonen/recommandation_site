@@ -1,0 +1,23 @@
+<form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="genre">Genre :</label>
+    <select id="genre" formControlName="genre">
+      <option value="">Tous les genres</option>
+      @for (genre of availableGenres; track genre) {
+        <option [value]="genre">{{ genre }}</option>
+      }
+    </select>
+  </div>
+
+  <div>
+    <label for="title">Titre :</label>
+    <input id="title" type="text" formControlName="title" />
+  </div>
+
+  <div>
+    <label for="year">Année :</label>
+    <input id="year" type="number" formControlName="year" />
+  </div>
+
+  <button type="submit">Rechercher</button>
+</form>

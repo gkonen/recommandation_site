@@ -14,7 +14,6 @@ export class Header {
 
   readonly connectedState = this.authService.isAuthenticated;
 
-
   async onConnectClick() {
     console.log('Connection state:', this.connectedState());
     if (this.connectedState()) {
