@@ -16,7 +16,7 @@ class MovieController:
             genre_name: Optional string for filtering by genre name
             page: Page number (default 1)
             per_page: Number of results per page (default 50)
-            
+
         Returns:
             Dictionary containing paginated movies and metadata
         """
@@ -29,7 +29,7 @@ class MovieController:
         )
 
         total_pages = math.ceil(total / per_page) if total > 0 else 0
-        
+
         return {
             "movies": [ self._serialize_movie(m) for m in movies ],
             "pagination": {
@@ -41,6 +41,7 @@ class MovieController:
                 "has_next": page < total_pages
             }
         }
+        # return {"movies": [{"id": m.movie_id, "title": m.title, "genre": [ g.genre_name for g in m.genres]} for m in list_movies[:50]]}
 
     def get_movie(self, movie_id):
         movie = self.__repository.get_movie(movie_id)
@@ -48,7 +49,7 @@ class MovieController:
             return self._serialize_movie(movie), 200
         else:
             return {"error" : "Movie not found"}, 400
-        
+
     def _serialize_movie(self, movie):
         return {
             "id": movie.movie_id,
