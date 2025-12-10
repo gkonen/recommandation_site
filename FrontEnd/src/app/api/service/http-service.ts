@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs';
 import { ResponseCatalogue } from '../ResponseMovieModel';
 import { MovieFilter } from '../../component/search-filter/MovieFilter';
+import {ResponseGenre} from '../GenreModel';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,12 @@ export class HttpService {
         ),
         pagination : response.pagination
       }))
+    );
+  }
+
+  get_all_genres() {
+    return this.http.get<ResponseGenre>(this.url + 'genres').pipe(
+      map(response => response.genres)
     );
   }
 

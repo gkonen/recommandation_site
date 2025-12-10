@@ -1,4 +1,4 @@
-import {Component, inject, output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MovieFilter} from './MovieFilter';
 
@@ -13,7 +13,7 @@ import {MovieFilter} from './MovieFilter';
 export class SearchFilter {
   private fb = inject(FormBuilder);
 
-  availableGenres = ['Aventure', 'Action', 'Comédie', 'Drame', 'Horreur', 'Science-Fiction'];
+  availableGenres = input.required<string[]>()
 
   onSearchFilter = output<MovieFilter>()
 
