@@ -13,25 +13,25 @@ def get_all_movies(controller):
     year = request.args.get('year', type=int)  # Convert to int if provided
     genre_name = request.args.get('genre_name')
 
-    return controller.get_all_movies(title=title, year=year, genre_name=genre_name)
+    # Pagination parameters
+    page = request.args.get('page', default=1, type=int)
+    per_page = request.args.get('per_page', default=50, type=int)
+
+    # Validate pagination parameters
+    if page < 1:
+        page = 1
+    if per_page < 1 or per_page > 100:  # Max 100 items per page
+        per_page = 50
+    
+    return controller.get_all_movies(
+        title=title,
+        year=year,
+        genre_name=genre_name,
+        page=page,
+        per_page=per_page
+    )
 
 @movie_route.route('/<int:movie_id>')
 @with_session(factory_func=MovieFactory.get_controller)
 def get_movie(controller, movie_id):
     return controller.get_movie(movie_id)
-
-
-# ### TEST 
-# @movie_route.route('/debug/<int:movie_id>')
-# @with_session(factory_func=MovieFactory.get_controller)
-# def debug_movie(controller, movie_id):
-#     movie = controller._MovieController__repository.get_movie(movie_id)
-#     if movie:
-#         return {
-#             "movie_id": movie.movie_id,
-#             "title": movie.title,
-#             "year": movie.year,
-#             "genres": [g.genre_name for g in movie.genres],
-#             "genre_count": len(movie.genres)
-#         }
-#     return {"error": "Movie not found"}, 404
