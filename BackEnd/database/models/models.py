@@ -15,8 +15,8 @@ class Movie(Base):
 
     genres: Mapped[list['Genre']] = relationship(secondary='movie_genre', back_populates='movies', default_factory=list)
     #ratings: Mapped[list['Rating']] = relationship(back_populates='movie', cascade='all, delete-orphan', default_factory=list)
-    score: Mapped['MovieRating| None'] = relationship(back_populates='movie', uselist=False, viewonly=True)
-    tags: Mapped[list['MovieTag']] = relationship(back_populates='movie',  viewonly=True)
+    score: Mapped['MovieRating'] = relationship(back_populates='movie', uselist=False, viewonly=True, init=False)
+    tags: Mapped[list['MovieTag']] = relationship(back_populates='movie',  viewonly=True, default_factory=list, init=False)
 
 
 class Genre(Base):
@@ -66,7 +66,7 @@ class MovieRating(Base):
     movie_id: Mapped[int] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
     rating: Mapped[int] = mapped_column("score", FLOAT, nullable=False)
 
-    movie: Mapped['Movie'] = relationship(back_populates='score')
+    movie: Mapped['Movie'] = relationship(back_populates='score', viewonly=True)
 
 
 class Tag(Base):
@@ -87,6 +87,5 @@ class MovieTag(Base):
     movie_id: Mapped[int] = mapped_column("movie_id", ForeignKey('movie.movie_id', ondelete='CASCADE'), primary_key=True)
     clean_tag: Mapped[str] = mapped_column("clean_tag", Text, nullable=False, primary_key=True)
 
-    movie: Mapped['Movie'] = relationship(back_populates='tags')
-
+    movie: Mapped['Movie'] = relationship(back_populates='tags', viewonly=True)
 #endregion
