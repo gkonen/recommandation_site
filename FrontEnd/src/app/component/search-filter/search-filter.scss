@@ -1,0 +1,68 @@
+form {
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 200px;
+    gap: 0.5rem;
+
+    label {
+      font-weight: 600;
+      color: var(--on-surface);
+      font-size: 1rem;
+    }
+
+    input, select {
+      padding: 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--border-radius);
+      background: var(--surface);
+      color: var(--on-surface);
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary);
+        font-size: 1rem;
+      }
+    }
+    input[type="number"]{
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      -moz-appearance: textfield;
+    }
+  }
+
+  button {
+    align-self: flex-end;
+    padding: 0.75rem;
+  }
+}
+
+//
+//button[type="submit"] {
+//  flex: 1 1 100%;
+//  padding: 0.875rem;
+//  background: #4a90e2;
+//  color: white;
+//  border: none;
+//  border-radius: 6px;
+//  font-size: 1rem;
+//  font-weight: 600;
+//  cursor: pointer;
+//  transition: background 0.3s ease;
+//}
+//
+//button[type="submit"]:hover {
+//  background: #357abd;
+//}
