@@ -1,1 +1,19 @@
-<p>register works!</p>
+<div class="registration-container">
+  <div class="registration-card">
+    <h2>Registration</h2>
+
+    <form class="registration-form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required />
+      </div>
+
+      <button type="submit" class="md-button">Sign up</button>
+    </form>
+  </div>
+</div>
