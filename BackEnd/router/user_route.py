@@ -11,8 +11,8 @@ def get_users(controller):
 
 @user_route.route('/<int:user_id>')
 @with_session(factory_func=UserFactory.get_controller)
-def get_user(controller, user_id):
-    return controller.get_user(user_id)
+def get_user_data(controller, user_id):
+    return controller.get_user_data(user_id)
 
 @user_route.route('/login', methods=['POST'])
 @with_session(factory_func=UserFactory.get_controller)
