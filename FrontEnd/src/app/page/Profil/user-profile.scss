@@ -3,6 +3,37 @@ h1, h2, p {
   text-align: center;
 }
 
+.category-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+
+  .category-button{
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--outline-variant);
+    border-radius: 0;
+    background-color: var(--surface-variant);
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--surface-variant);
+    }
+    &:active, &.active {
+      border-color: var(--primary);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+  }
+}
+
 .item-container {
   display: flex;
   flex-wrap: wrap;
