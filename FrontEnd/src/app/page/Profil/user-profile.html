@@ -1,8 +1,11 @@
-<p>user-profile works!</p>
 
-<p> id : {{ user().id }}</p>
-<p> username : {{ user().username }}</p>
+<h1> Welcome {{ user().username }} </h1>
 
-@for (movie of movies(); track movie.id) {
-  <app-condensed-movie [movie]="movie"></app-condensed-movie>
-}
+<p> You will find your history below with the film you rated or tagged</p>
+
+<h2>Your History</h2>
+<div class="item-container">
+  @for (movie of movies(); track movie.id) {
+      <app-condensed-movie [movie]="movie"></app-condensed-movie>
+  }
+</div>

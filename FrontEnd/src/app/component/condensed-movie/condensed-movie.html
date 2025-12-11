@@ -1,16 +1,21 @@
 
-<article class="movie-compact">
+<div class="movie-compact">
   <div class="header">
     <h3 class="title">{{ movie().title }}</h3>
     <span class="year">{{ movie().year }}</span>
   </div>
+  <span class="genres"> {{ movie().genres.slice(0, 2).join(', ') }} </span>
 
   <div class="details">
-    <span class="score">
-      ⭐ {{ movie().score.toFixed(1) }}
-    </span>
-    <span class="genres">
-      {{ movie().genres.slice(0, 2).join(', ') }}
-    </span>
+    <div class="container-details">
+      <span class="label">Your rating </span>
+      <span class="value">{{ movie().score.toFixed(1) }} </span>
+    </div>
+
+    <div class="container-details">
+      <span class="label"> Your tags </span>
+      <span class="value"> {{ movie().tags.join(', ') }}</span>
+    </div>
+
   </div>
-</article>
+</div>

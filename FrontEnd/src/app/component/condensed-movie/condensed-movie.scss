@@ -1,52 +1,56 @@
 .movie-compact {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   padding: 0.75rem 1rem;
+  min-width: 50rem;
   background: var(--surface);
   border-radius: var(--border-radius);
   border: 1px solid var(--outline-variant);
 
-  &__header {
+  .header {
+    font-size : 1rem;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 0.5rem;
+
+    .title {
+      font-weight: 600;
+      color: var(--on-surface);
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .year {
+      flex-shrink: 0;
+      color: var(--on-surface-variant);
+    }
   }
 
-  &__title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--on-surface);
-    margin: 0;
+  .genres {
+    color: var(--on-surface-variant);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    flex: 1;
+    padding-bottom: 0.5rem;
   }
 
-  &__year {
-    flex-shrink: 0;
-    font-size: 0.85rem;
-    color: var(--on-surface-variant);
-  }
-
-  &__meta {
+  .container-details {
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    font-size: 0.85rem;
-  }
+    flex-direction: row;
+    justify-content: flex-start;
 
-  &__score {
-    color: var(--primary);
-    font-weight: 600;
-  }
-
-  &__genres {
-    color: var(--on-surface-variant);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    .label {
+      font-weight: 500;
+      width: 20%;
+      color: var(--on-surface-variant);
+    }
+    .value {
+      width: 80%;
+      color: var(--on-surface-variant);
+    }
   }
 }
