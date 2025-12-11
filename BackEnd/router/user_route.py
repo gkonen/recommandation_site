@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from utils.decorators import with_session
 from utils.user_factory import UserFactory
 
-user_route = Blueprint('user_route', __name__, url_prefix='/user')
+user_route = Blueprint('user_route', __name__, url_prefix='/users')
 
 @user_route.route('')
 @with_session(factory_func=UserFactory.get_controller)
@@ -53,6 +53,6 @@ def login(controller):
 #             "found": True,
 #             "user_id": user.user_id,
 #             "username": user.username,
-#             "password_in_db": user.pw  # Shows what's actually stored
+#             "password_in_db": user.pw
 #         }
 #     return {"found": False}, 404

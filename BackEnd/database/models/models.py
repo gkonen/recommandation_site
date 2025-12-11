@@ -57,7 +57,8 @@ class Rating(Base):
     rating: Mapped[int] = mapped_column(SmallInteger, nullable=False)
     recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True, default=None)
 
-    #movie: Mapped['Movie'] = relationship(back_populates='ratings', init=False)
+    # movie: Mapped['Movie'] = relationship(back_populates='ratings', init=False)
+    movie: Mapped['Movie'] = relationship(init=False)
     user: Mapped['AppUser'] = relationship(back_populates='ratings', init=False)
 
 class MovieRating(Base):
@@ -78,7 +79,8 @@ class Tag(Base):
     tag: Mapped[str | None] = mapped_column(Text, nullable=True, default=None)
     recorded_at: Mapped[int | None] = mapped_column(BigInteger, nullable=True, default=None)
 
-    #movie: Mapped['Movie'] = relationship(back_populates='tags', init=False)
+    # movie: Mapped['Movie'] = relationship(back_populates='tag', init=False)
+    movie: Mapped['Movie'] = relationship(init=False)
     user: Mapped['AppUser'] = relationship(back_populates='tags', init=False)
 
 class MovieTag(Base):
