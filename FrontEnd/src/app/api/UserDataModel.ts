@@ -1,7 +1,8 @@
 export interface MovieData {
   movie_id: number,
   movie_title: string,
-  rating: number,
+  rating: number | undefined,
+  tag: string | undefined,
   timestamp: number
 }
 

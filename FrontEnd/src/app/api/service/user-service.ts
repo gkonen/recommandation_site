@@ -28,7 +28,8 @@ export class UserService {
   }
 
   get_user_data(user: UserModel) {
-    return this.http.get<ResponseData>(this.url + 'users/' + user.id).pipe(
+    const id = user.id; // 109 to test tags and ratings
+    return this.http.get<ResponseData>(this.url + 'users/' + id).pipe(
       map(response => ({
         ratings: response.ratings,
         tags: response.tags,

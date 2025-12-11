@@ -2,7 +2,7 @@
   <div>
     <label for="genre">Genre :</label>
     <select id="genre" formControlName="genre_name">
-      <option value="">Tous les genres</option>
+      <option value="">All Genres</option>
       @for (genre of availableGenres(); track genre) {
         <option [value]="genre">{{ genre }}</option>
       }
@@ -10,12 +10,12 @@
   </div>
 
   <div>
-    <label for="title">Titre :</label>
+    <label for="title">Title :</label>
     <input id="title" type="text" formControlName="title" />
   </div>
 
   <div>
-    <label for="year">Année :</label>
+    <label for="year">Year :</label>
     <input id="year" type="number" formControlName="year" />
   </div>
 

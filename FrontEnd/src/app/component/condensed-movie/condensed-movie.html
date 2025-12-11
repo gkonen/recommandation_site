@@ -1,21 +1,24 @@
 
 <div class="movie-compact">
   <div class="header">
-    <h3 class="title">{{ movie().title }}</h3>
-    <span class="year">{{ movie().year }}</span>
+    <h3 class="title">{{ movie().movie_title }}</h3>
+<!--    <span class="year">{{ movie().year }}</span>-->
   </div>
-  <span class="genres"> {{ movie().genres.slice(0, 2).join(', ') }} </span>
+<!--  <span class="genres"> {{ movie().genres.slice(0, 2).join(', ') }} </span>-->
 
   <div class="details">
-    <div class="container-details">
-      <span class="label">Your rating </span>
-      <span class="value">{{ movie().score.toFixed(1) }} </span>
-    </div>
-
-    <div class="container-details">
-      <span class="label"> Your tags </span>
-      <span class="value"> {{ movie().tags.join(', ') }}</span>
-    </div>
+    @if (category().name === 'Ratings') {
+      <div class="container-details">
+        <span class="label">Your rating </span>
+        <span class="value">{{ (movie().rating ?? 0) / 2 }} </span>
+      </div>
+    }
+    @if (category().name === 'Tags') {
+      <div class="container-details">
+        <span class="label"> Your tags </span>
+        <span class="value"> {{ movie().tag ?? 'N/A' }}</span>
+      </div>
+    }
 
   </div>
 </div>

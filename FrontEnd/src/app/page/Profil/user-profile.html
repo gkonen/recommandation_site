@@ -1,11 +1,20 @@
 
 <h1> Welcome {{ user().username }} </h1>
 
-<p> You will find your history below with the film you rated or tagged</p>
+<p> You will find your history below with the film you rated or you taged </p>
 
 <h2>Your History</h2>
+
+<div class="category-selector">
+  @for( category of categories; track category.id) {
+    <button class="category-button"
+            (click)="onCategoryClick(category.id)"
+            [class.active]="category.id === selectedCategory().id"> {{ category.name }} </button>
+  }
+</div>
+
 <div class="item-container">
-  @for (movie of ratings(); track movie.movie_id) {
-      <app-condensed-movie [movie]="movie"></app-condensed-movie>
+  @for (movie of viewData(); track $index) {
+      <app-condensed-movie [movie]="movie" [category]="selectedCategory()"></app-condensed-movie>
   }
 </div>
