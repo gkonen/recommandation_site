@@ -14,6 +14,7 @@ export class SearchFilter {
   private fb = inject(FormBuilder);
 
   availableGenres = input.required<string[]>()
+  isLoading = input.required<boolean>()
 
   onSearchFilter = output<MovieFilter>()
 

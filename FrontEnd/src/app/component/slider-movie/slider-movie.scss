@@ -2,7 +2,11 @@
   overflow: hidden;
   cursor: grab;
 
-  &:active {
+  &.empty{
+    cursor: default;
+  }
+
+  &:active:not(.empty) {
     cursor: grabbing;
   }
 
