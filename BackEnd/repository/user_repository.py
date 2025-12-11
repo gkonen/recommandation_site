@@ -1,4 +1,7 @@
 from database.models.models import AppUser
+from database.models.models import Rating
+from database.models.models import Tag
+
 
 class UserRepository:
     def __init__(self, session):
@@ -20,4 +23,12 @@ class UserRepository:
         Returns:
             AppUser object or None
         """
-        return self.session.query(AppUser).filter(AppUser.username == username).first()    
+        return self.session.query(AppUser).filter(AppUser.username == username).first()
+    
+    def get_ratings_by_user(self, user_id):
+        rated_movies = self.session.query(Rating).filter(Rating.user_id == user_id).first()
+        return rated_movies
+    
+    def get_tags_by_user(self, user_id):
+        tagged_movies = self.session.query(Tag).filter(Tag.user_id == user_id).first()
+        return tagged_movies
