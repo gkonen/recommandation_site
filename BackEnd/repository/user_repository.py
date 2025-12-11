@@ -1,6 +1,5 @@
-from database.models.models import AppUser
-from database.models.models import Rating
-from database.models.models import Tag
+from database.models.models import AppUser, Rating, Tag
+from sqlalchemy.orm import joinedload
 
 
 class UserRepository:
@@ -25,16 +24,6 @@ class UserRepository:
         """
         return self.session.query(AppUser).filter(AppUser.username == username).first()
     
-    def user_exists(self, user_id):
-        """
-        Check if a user exists in the database.
-        
-        Returns:
-            True if user exists, False otherwise
-        """
-        user = self.session.query(AppUser).filter(AppUser.user_id == user_id).first()
-        return user is not None
-    
     def get_ratings_by_user(self, user_id):
         """
         Get all ratings by a specific user.
@@ -42,7 +31,12 @@ class UserRepository:
         Returns:
             List of Rating objects (empty list if user has no ratings)
         """
-        ratings = self.session.query(Rating).filter(Rating.user_id == user_id).all()
+        ratings = (
+            self.session.query(Rating)
+            .options(joinedload(Rating.movie))  # Load all movie data in a single query
+            .filter(Rating.user_id == user_id)
+            .all()
+        )
         return ratings
     
     def get_tags_by_user(self, user_id):
@@ -52,5 +46,10 @@ class UserRepository:
         Returns:
             List of Tag objects (empty list if user has no tags)
         """
-        tags = self.session.query(Tag).filter(Tag.user_id == user_id).all()
+        tags = (
+            self.session.query(Tag)
+            .options(joinedload(Tag.movie))  # Load all movie data in a single query
+            .filter(Tag.user_id == user_id)
+            .all()
+        )
         return tags
