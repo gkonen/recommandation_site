@@ -1,7 +1,7 @@
 <form [formGroup]="filterForm" (ngSubmit)="onSubmit()">
   <div>
     <label for="genre">Genre :</label>
-    <select id="genre" formControlName="genre">
+    <select id="genre" formControlName="genre_name">
       <option value="">Tous les genres</option>
       @for (genre of availableGenres(); track genre) {
         <option [value]="genre">{{ genre }}</option>

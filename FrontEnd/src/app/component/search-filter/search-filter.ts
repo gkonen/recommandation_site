@@ -1,5 +1,5 @@
 import {Component, inject, input, output} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MovieFilter} from './MovieFilter';
 
 @Component({
@@ -18,19 +18,20 @@ export class SearchFilter {
 
   onSearchFilter = output<MovieFilter>()
 
-  protected filterForm = this.fb.group({
-    title: ['', Validators.minLength(3)],
-    genre: [''],
-    year: ['']
+  protected filterForm : FormGroup = this.fb.group({
+    title: this.fb.control<string | null>('', Validators.minLength(3)),
+    genre_name:  this.fb.control<string | null>(''),
+    year:  this.fb.control<string | null>('')
   });
 
   onSubmit() {
-    const { title, genre, year } = this.filterForm.value;
-    const filters = {
+    const { title, genre_name, year } = this.filterForm.value;
+    const filters : MovieFilter = {
       ...(title && { title }),
-      ...(genre && { genre }),
+      ...(genre_name && { genre_name: genre_name }),
       ...(year && { year: Number(year) })
     };
+    console.log(filters);
     this.onSearchFilter.emit(filters);
   }
 
