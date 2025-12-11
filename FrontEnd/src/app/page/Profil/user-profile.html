@@ -1,0 +1,8 @@
+<p>user-profile works!</p>
+
+<p> id : {{ user().id }}</p>
+<p> username : {{ user().username }}</p>
+
+@for (movie of movies(); track movie.id) {
+  <app-condensed-movie [movie]="movie"></app-condensed-movie>
+}

@@ -8,7 +8,7 @@ import {ResponseGenre} from '../GenreModel';
 @Injectable({
   providedIn: 'root',
 })
-export class HttpService {
+export class MovieService {
   private url = 'http://localhost:5000/';
   private http = inject(HttpClient);
 

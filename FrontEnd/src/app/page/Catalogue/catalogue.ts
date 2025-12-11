@@ -2,7 +2,7 @@ import {Component, inject, OnInit, signal} from '@angular/core';
 import {CardMovie} from '../../component/card-movie/card-movie';
 import {Movie} from '../../api/MovieModel';
 import {Pagination} from '../../component/pagination/pagination';
-import {HttpService} from '../../api/service/http-service';
+import {MovieService} from '../../api/service/movie-service';
 import {SliderMovie} from '../../component/slider-movie/slider-movie';
 import {SearchFilter} from '../../component/search-filter/search-filter';
 import {MovieFilter} from '../../component/search-filter/MovieFilter';
@@ -27,7 +27,7 @@ type CatalogueState =
   styleUrl: './catalogue.scss',
 })
 export class Catalogue implements OnInit {
-  private httpService = inject(HttpService);
+  private httpService = inject(MovieService);
   private searchFilter = signal<MovieFilter | null>(null);
 
   readonly state = signal<CatalogueState>({ status: 'idle' });

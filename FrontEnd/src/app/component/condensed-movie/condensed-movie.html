@@ -1,0 +1,16 @@
+
+<article class="movie-compact">
+  <div class="header">
+    <h3 class="title">{{ movie().title }}</h3>
+    <span class="year">{{ movie().year }}</span>
+  </div>
+
+  <div class="details">
+    <span class="score">
+      ⭐ {{ movie().score.toFixed(1) }}
+    </span>
+    <span class="genres">
+      {{ movie().genres.slice(0, 2).join(', ') }}
+    </span>
+  </div>
+</article>

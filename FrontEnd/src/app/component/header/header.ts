@@ -20,9 +20,22 @@ export class Header {
       this.authService.logout();
       await this.router.navigate(['/']);
     } else {
-      this.connectedState.set(!this.connectedState())
       await this.router.navigate(['login']);
     }
   }
+
+  async onRegisterClick() {
+    console.log('Connection state:', this.connectedState());
+    console.log('user data:', this.authService.getUser() )
+    if (this.connectedState()) {
+      const user = this.authService.getUser();
+      await this.router.navigate(['/profile'], {
+        queryParams: { id: user.id, username: user.username, logged: user.logged }
+      });
+    }
+    else return;
+
+  }
+
 
 }
