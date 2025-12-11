@@ -1,4 +1,4 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {Movie} from '../../api/MovieModel';
 
 @Component({

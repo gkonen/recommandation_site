@@ -1,8 +1,7 @@
-import {Component, inject, input, OnInit, signal} from '@angular/core';
-import {AuthService} from '../../api/service/auth-service';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {MovieService} from '../../api/service/movie-service';
 import {DefaultUser, UserModel} from '../../api/UserModel';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Movie} from '../../api/MovieModel';
 import {CondensedMovie} from '../../component/condensed-movie/condensed-movie';
 
