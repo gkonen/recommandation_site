@@ -11,9 +11,10 @@ export class AuthService {
   readonly isAuthenticated = computed(() => this.user().logged);
 
   login(username: string, password: string) {
-    const user = this.userService.connect(username, password);
-    // Change this to the actual user
-    this.user.set(user);
+    this.userService.connect(username, password).subscribe(user => {
+      this.user.set(user);
+      console.log(user);
+    });
   }
 
   logout() {

@@ -1,9 +1,10 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
-import {MovieService} from '../../api/service/movie-service';
 import {DefaultUser, UserModel} from '../../api/UserModel';
 import {ActivatedRoute} from '@angular/router';
-import {Movie} from '../../api/MovieModel';
 import {CondensedMovie} from '../../component/condensed-movie/condensed-movie';
+import {UserService} from '../../api/service/user-service';
+import {MovieData} from '../../api/UserDataModel';
+import {DataUser} from '../../api/ResponseData';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,11 +16,12 @@ import {CondensedMovie} from '../../component/condensed-movie/condensed-movie';
 })
 export class UserProfile implements OnInit {
 
-  private movieService = inject(MovieService);
+  private userService = inject(UserService);
   private router = inject(ActivatedRoute)
 
   readonly user = signal<UserModel>(DefaultUser());
-  readonly movies = signal<Movie[]>([]);
+  readonly tags = signal<MovieData[]>([]);
+  readonly ratings = signal<MovieData[]>([]);
 
   ngOnInit() {
     this.router.queryParams.subscribe(params => {
@@ -33,10 +35,10 @@ export class UserProfile implements OnInit {
   }
 
   loadData() {
-    this.movieService.get_movies().subscribe((movies : Movie[]) => {
-      this.movies.set(movies);
-      console.log(movies);
+    this.userService.get_user_data(this.user()).subscribe((response : DataUser ) => {
+      this.tags.set(response.tags)
+      this.ratings.set(response.ratings)
+      console.log(response);
     })
   }
-
 }

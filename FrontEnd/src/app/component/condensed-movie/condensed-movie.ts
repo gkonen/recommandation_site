@@ -1,5 +1,5 @@
 import {Component, input} from '@angular/core';
-import {Movie} from '../../api/MovieModel';
+import {MovieData} from '../../api/UserDataModel';
 
 @Component({
   selector: 'app-condensed-movie',
@@ -8,5 +8,5 @@ import {Movie} from '../../api/MovieModel';
   styleUrl: './condensed-movie.scss',
 })
 export class CondensedMovie {
-  readonly movie = input.required<Movie>()
+  readonly movie = input.required<MovieData>()
 }

@@ -7,7 +7,7 @@ class UserController:
     def get_all_users(self):
         return self.__repository.get_all_users()
 
-    def get_user(self, user_id):
+    def get_user_data(self, user_id):
         """
         Get a user by ID with their ratings and tags.
         

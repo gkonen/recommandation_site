@@ -5,7 +5,7 @@
 
 <h2>Your History</h2>
 <div class="item-container">
-  @for (movie of movies(); track movie.id) {
+  @for (movie of ratings(); track movie.movie_id) {
       <app-condensed-movie [movie]="movie"></app-condensed-movie>
   }
 </div>
