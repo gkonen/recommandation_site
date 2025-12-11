@@ -3,7 +3,7 @@ import {Home} from './page/Home/home';
 import {Catalogue} from './page/Catalogue/catalogue';
 import {NotFound} from './page/Not-found/not-found';
 import {FilmDetail} from './page/Film/film-detail';
-import {UserProfil} from './page/Profil/user-profil';
+import {UserProfile} from './page/Profil/user-profile';
 import {Login} from './page/Login/login';
 
 export const routes: Routes = [
@@ -12,6 +12,6 @@ export const routes: Routes = [
   { path: 'catalogue', component: Catalogue},
   { path: 'login', component: Login},
   { path: 'film/:id', component: FilmDetail },
-  { path: 'profile/:id', component: UserProfil},
+  { path: 'profile', component: UserProfile},
   { path: '**', component: NotFound }
 ];
