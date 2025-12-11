@@ -10,6 +10,7 @@ CORS(app)
 app.register_blueprint(movie_route)
 app.register_blueprint(user_route)
 app.register_blueprint(genre_route)
+
 # Keep this code as example of request to database
 # @app.route('/movies')
 # def get_movies():

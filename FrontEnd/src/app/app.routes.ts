@@ -7,7 +7,7 @@ import {UserProfil} from './page/Profil/user-profil';
 import {Login} from './page/Login/login';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'catalogue', pathMatch: 'full' },
   { path: 'home', component: Home },
   { path: 'catalogue', component: Catalogue},
   { path: 'login', component: Login},
