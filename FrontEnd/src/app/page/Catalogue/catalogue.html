@@ -12,11 +12,12 @@
     </div>
   }
 
-
   <h2>Catalogue</h2>
-  <app-search-filter (onSearchFilter)="onSearchFilter($event)"
-                     [isLoading]="state().status === 'loading'"
-                     [availableGenres]="genreMovie()" ></app-search-filter>
+  <div class="container">
+    <app-search-filter (onSearchFilter)="onSearchFilter($event)"
+                       [isLoading]="state().status === 'loading'"
+                       [availableGenres]="genreMovie()" ></app-search-filter>
+  </div>
 
   <app-pagination (changePage)="onPageChange($event)"
                   [paginationDetail]="pagination()"></app-pagination>
