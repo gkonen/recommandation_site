@@ -1,16 +1,37 @@
-<h2>Recommended Movies</h2>
-<div class="container">
-  <app-slider-movie [movies_list]="recommendMovie()"></app-slider-movie>
-</div>
+<div [style.cursor]="state().status === 'loading' ? 'wait' : 'default'">
 
-<h2>Catalogue</h2>
-<app-search-filter (onSearchFilter)="onSearchFilter($event)"
-                   [availableGenres]="genreMovie()" ></app-search-filter>
-<app-pagination (changePage)="onPageChange($event)"
-                [paginationDetail]="pagination()"></app-pagination>
-<div class="container movie-grid">
-  @for (movie of catalogMovie(); track movie.id) {
-    <app-card-movie [movie]="movie"></app-card-movie>
+  <h2>Recommended Movies</h2>
+  @if (state().status === 'view') {
+    <div class="container">
+      <app-slider-movie [movies_list]="recommendMovie()"></app-slider-movie>
+    </div>
   }
+  @else if (state().status === 'no-result') {
+    <div class="no-result">
+      <h3>No result for this search</h3>
+    </div>
+  }
+
+
+  <h2>Catalogue</h2>
+  <app-search-filter (onSearchFilter)="onSearchFilter($event)"
+                     [isLoading]="state().status === 'loading'"
+                     [availableGenres]="genreMovie()" ></app-search-filter>
+
+  <app-pagination (changePage)="onPageChange($event)"
+                  [paginationDetail]="pagination()"></app-pagination>
+  @if (state().status === 'view') {
+    <div class="container movie-grid">
+      @for (movie of catalogMovie(); track movie.id) {
+        <app-card-movie [movie]="movie"></app-card-movie>
+      }
+    </div>
+  }
+  @else if (state().status === 'no-result') {
+    <div class="no-result">
+      <h3>No result for this search</h3>
+    </div>
+  }
+
 </div>
 

@@ -19,5 +19,5 @@
     <input id="year" type="number" formControlName="year" />
   </div>
 
-  <button class="md-button" type="submit">Rechercher</button>
+  <button [disabled]="isLoading()" class="md-button" type="submit">Rechercher</button>
 </form>

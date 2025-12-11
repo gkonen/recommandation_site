@@ -1,4 +1,4 @@
-<div class="slider-container"
+<div class="slider-container" [class.empty]="movies_list().length === 0"
      (mousedown)="onDragStart($event)"
      (mousemove)="onDragMove($event)"
      (mouseup)="onDragEnd()"

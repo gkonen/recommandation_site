@@ -9,6 +9,12 @@ import {MovieFilter} from '../../component/search-filter/MovieFilter';
 import {ResponseCatalogue} from '../../api/ResponseMovieModel';
 import {PaginationDetail} from '../../api/service/PaginationDetailModel';
 
+type CatalogueState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'view' }
+  | { status: 'no-result' };
+
 @Component({
   selector: 'app-catalogue',
   imports: [
@@ -24,6 +30,8 @@ export class Catalogue implements OnInit {
   private httpService = inject(HttpService);
   private searchFilter = signal<MovieFilter | null>(null);
 
+  readonly state = signal<CatalogueState>({ status: 'idle' });
+
   readonly catalogMovie = signal<Movie[]>([]);
   readonly genreMovie = signal<string[]>([]);
   readonly recommendMovie = signal<Movie[]>([]);
@@ -32,10 +40,9 @@ export class Catalogue implements OnInit {
     has_prev: false,
     page: 1,
     per_page: 50,
-    total: 0,
-    total_pages: 0
+    total: 1,
+    total_pages: 1
   });
-  //readonly currentPage = signal<number>(1);
 
   ngOnInit() {
     this.loadMovies();
@@ -49,21 +56,47 @@ export class Catalogue implements OnInit {
   }
 
   loadMovies(page: number= 1) {
-    this.httpService.get_movies(page).subscribe((response : ResponseCatalogue) => {
-      this.catalogMovie.set(response.movies);
-      //this.recommendMovie.set(movies);
-      this.pagination.set(response.pagination);
+    this.state.set({ status: 'loading' });
+    this.httpService.get_movies(page).subscribe({
+      // When we receive a response, we update the state and set our catalogue
+      next: (response : ResponseCatalogue) => {
+        this.catalogMovie.set(response.movies);
+        this.pagination.set(response.pagination);
+      },
+      // When we receive an error
+      error: () => {
+        this.state.set({ status: 'no-result' });
+      },
+      // When the request is complete
+      complete: () => {
+        if(this.catalogMovie().length == 0) {
+          this.state.set({ status: 'no-result' });
+        } else {
+          this.state.set({ status: 'view' });
+        }
+      }
     })
   }
 
   protected onSearchFilter(filters: any, page: number = 1) {
-    console.log(filters);
-    this.searchFilter.set(filters);
-    this.httpService.get_movie_by_filter(filters, page).subscribe((response : ResponseCatalogue) => {
+    this.state.set({ status: 'loading' });
+    this.httpService.get_movie_by_filter(filters, page).subscribe({
+      next: (response : ResponseCatalogue) => {
+        this.searchFilter.set(filters);
         this.catalogMovie.set(response.movies);
-      this.pagination.set(response.pagination);
+        this.pagination.set(response.pagination);
+      },
+      error: () => {
+        this.state.set({ status: 'no-result' });
+      },
+      complete: () => {
+        if(this.catalogMovie().length == 0) {
+          this.state.set({ status: 'no-result' });
+        } else {
+          this.state.set({ status: 'view' });
+        }
       }
-    )
+    })
   }
 
   protected onPageChange($event: number) {
