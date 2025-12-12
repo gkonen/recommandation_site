@@ -91,3 +91,31 @@ class UserController:
             return {"logged": True, "id": user.user_id}, 200
         else:
             return {"logged": False, "id": None}, 401
+
+
+    def register_user(self, username, password):
+        """
+        Register a new user with username and password.
+        
+        Args:
+            username: The desired username
+            password: The password
+            
+        Returns:
+            Tuple of (response dict, status code)
+        """
+        if not username or not password:
+            return {"error": "Username and password required"}, 400
+        
+        # Check if username already exists
+        existing_user = self.__repository.get_user_by_username(username)
+        
+        if existing_user is not None:
+            return {"error": "Username already exists"}, 409
+        
+        try:
+            # Create new user
+            new_user = self.__repository.create_user(username, password)
+            return {"message": "User created successfully", "user_id": new_user.user_id}, 201
+        except Exception as e:
+            return {"error": f"Registration failed: {str(e)}"}, 400
