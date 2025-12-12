@@ -42,6 +42,36 @@ def login(controller):
     
     return controller.authenticate_user(username, password)
 
+@user_route.route('/register', methods=['POST'])
+@with_session(factory_func=UserFactory.get_controller)
+def register(controller):
+    """
+    Register a new user.
+    
+    Expected JSON body:
+    {
+        "username": "jane_doe",
+        "password": "secret123"
+    }
+    
+    Returns:
+    {
+        "message": "User created successfully",
+        "user_id": 123
+    }
+    or error response
+    """
+    data = request.get_json()
+    
+    if not data:
+        return {"error": "No data provided"}, 400
+    
+    username = data.get('username')
+    password = data.get('password')
+    
+    return controller.register_user(username, password)
+
+
 
 # ### ROUTE FOR TESTING
 # @user_route.route('/debug/<username>')
