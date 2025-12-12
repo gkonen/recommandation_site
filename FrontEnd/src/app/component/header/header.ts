@@ -1,6 +1,6 @@
-import {Component, inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthService} from '../../api/service/auth-service';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../api/service/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -26,16 +26,14 @@ export class Header {
 
   async onRegisterClick() {
     console.log('Connection state:', this.connectedState());
-    console.log('user data:', this.authService.getUser() )
+    console.log('User data:', this.authService.getUser());
     if (this.connectedState()) {
       const user = this.authService.getUser();
       await this.router.navigate(['/profile'], {
-        queryParams: { id: user.id, username: user.username, logged: user.logged }
+        queryParams: { id: user.id, username: user.username, logged: user.logged },
       });
+    } else {
+      await this.router.navigate(['/register']);
     }
-    else return;
-
   }
-
-
 }
