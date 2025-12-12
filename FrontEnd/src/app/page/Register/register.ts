@@ -15,6 +15,32 @@ export class Register {
 
   username: string = '';
   password: string = '';
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
-  async onSubmit() {}
+  async onSubmit() {
+    if (!this.username || !this.password) {
+      this.errorMessage = 'Please fill in both fields';
+      return;
+    }
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.regService.register(this.username, this.password).subscribe({
+      next: (response) => {
+        console.log('Registration successful', response);
+        // Navigate to login page after successful registration
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Registration failed', error);
+        this.errorMessage = error.error?.message || 'Registration failed. Please try again.';
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
 }

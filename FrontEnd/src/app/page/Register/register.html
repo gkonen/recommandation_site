@@ -1,19 +1,41 @@
 <div class="registration-container">
   <div class="registration-card">
     <h2>Registration</h2>
-
     <form class="registration-form" (ngSubmit)="onSubmit()">
+      <!-- Error message -->
+      @if (errorMessage) {
+      <div class="error-message">
+        {{ errorMessage }}
+      </div>
+      }
+
       <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" [(ngModel)]="username" required />
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="username"
+          [disabled]="isLoading"
+          required
+        />
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" [(ngModel)]="password" required />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="password"
+          [disabled]="isLoading"
+          required
+        />
       </div>
 
-      <button type="submit" class="md-button">Sign up</button>
+      <button type="submit" class="md-button" [disabled]="isLoading">
+        {{ isLoading ? 'Signing up...' : 'Sign up' }}
+      </button>
     </form>
   </div>
 </div>
