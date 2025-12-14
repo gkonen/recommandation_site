@@ -31,7 +31,29 @@ def get_all_movies(controller):
         per_page=per_page
     )
 
-@movie_route.route('/<int:movie_id>')
+@movie_route.route('/<int:movie_id>', methods=['GET'])
 @with_session(factory_func=MovieFactory.get_controller)
 def get_movie(controller, movie_id):
     return controller.get_movie(movie_id)
+
+@movie_route.route('/rating/<int:movie_id>', methods=['POST'])
+@with_session(factory_func=MovieFactory.get_controller)
+def rating_movie(controller, movie_id):
+    """
+    Expected JSON body:
+    {
+        "user_id": 42,
+        "rating": 3
+    }
+    """
+    data = request.get_json()
+
+    if not data:
+        return {"error": "No data provided"}, 400
+
+    user_id = data.get('user_id')
+    rating = data.get('rating')
+
+    controller.post_rating_on_movie(movie_id, user_id, rating)
+    return {"message": "Rating posted successfully"}, 201
+

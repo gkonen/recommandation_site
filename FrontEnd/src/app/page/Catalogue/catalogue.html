@@ -24,9 +24,16 @@
   @if (state().status === 'view') {
     <div class="container movie-grid">
       @for (movie of catalogMovie(); track movie.id) {
-        <app-card-movie [movie]="movie"></app-card-movie>
+        <app-card-movie
+          (click)="openPopup(movie)"
+          [movie]="movie"></app-card-movie>
       }
     </div>
+    @if (isPopupVisible()) {
+      <app-popup-modal [movie]="selectedMovie()!"
+                       (confirm)="confirmPopup($event)"
+                       (close)="closePopup()"></app-popup-modal>
+    }
   }
   @else if (state().status === 'no-result') {
     <div class="no-result">

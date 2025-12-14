@@ -56,4 +56,19 @@ export class MovieService {
     );
   }
 
+  post_new_rating(movie_id: number, user_id: number, rating: number) {
+    console.log("send server : ", movie_id, user_id, rating );
+    return this.http.post<{ "user_id": number, "rating": number}>(
+      this.url + 'movies/rating/' + movie_id,
+      {
+        user_id: user_id,
+        rating: rating
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  }
+
 }

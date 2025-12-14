@@ -8,6 +8,8 @@ import {SearchFilter} from '../../component/search-filter/search-filter';
 import {MovieFilter} from '../../component/search-filter/MovieFilter';
 import {ResponseCatalogue} from '../../api/ResponseMovieModel';
 import {PaginationDetail} from '../../api/service/PaginationDetailModel';
+import {PopupModal} from '../../component/popup-modal/popup-modal';
+import {AuthService} from '../../api/service/auth-service';
 
 type CatalogueState =
   | { status: 'idle' }
@@ -21,16 +23,21 @@ type CatalogueState =
     CardMovie,
     Pagination,
     SliderMovie,
-    SearchFilter
+    SearchFilter,
+    PopupModal
   ],
   templateUrl: './catalogue.html',
   styleUrl: './catalogue.scss',
 })
 export class Catalogue implements OnInit {
-  private httpService = inject(MovieService);
+  private movieService = inject(MovieService);
+  private authService = inject(AuthService);
   private searchFilter = signal<MovieFilter | null>(null);
 
   readonly state = signal<CatalogueState>({ status: 'idle' });
+
+  readonly isPopupVisible = signal<boolean>(false);
+  readonly selectedMovie = signal<Movie | null>(null);
 
   readonly catalogMovie = signal<Movie[]>([]);
   readonly genreMovie = signal<string[]>([]);
@@ -50,14 +57,14 @@ export class Catalogue implements OnInit {
   }
 
   loadGenre() {
-    this.httpService.get_all_genres().subscribe((genres) => {
+    this.movieService.get_all_genres().subscribe((genres) => {
       this.genreMovie.set(genres);
     })
   }
 
   loadMovies(page: number= 1) {
     this.state.set({ status: 'loading' });
-    this.httpService.get_movies(page).subscribe({
+    this.movieService.get_movies(page).subscribe({
       // When we receive a response, we update the state and set our catalogue
       next: (response : ResponseCatalogue) => {
         this.catalogMovie.set(response.movies);
@@ -78,9 +85,37 @@ export class Catalogue implements OnInit {
     })
   }
 
+  openPopup(movie: Movie) {
+    if( this.authService.isAuthenticated() ) {
+      this.isPopupVisible.set(true);
+      this.selectedMovie.set(movie);
+    }
+  }
+
+  confirmPopup($event: number) {
+    const user = this.authService.getUser();
+    console.log(user);
+    if (user.id !== -1) {
+      this.movieService.post_new_rating(this.selectedMovie()!.id, user.id, $event)
+        .subscribe({
+          next: (response) => {
+            console.log('Rating envoyé avec succès:', response);
+            this.closePopup();
+          },
+          error: (error) => {
+            console.error('Erreur lors de l\'envoi du rating:', error);
+          }
+        });
+    }
+  }
+
+  closePopup() {
+    this.isPopupVisible.set(false);
+  }
+
   protected onSearchFilter(filters: any, page: number = 1) {
     this.state.set({ status: 'loading' });
-    this.httpService.get_movie_by_filter(filters, page).subscribe({
+    this.movieService.get_movie_by_filter(filters, page).subscribe({
       next: (response : ResponseCatalogue) => {
         this.searchFilter.set(filters);
         this.catalogMovie.set(response.movies);

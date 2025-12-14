@@ -1,4 +1,6 @@
-from database.models.models import Movie
+import time
+from sqlalchemy.dialects.postgresql import insert
+from database.models.models import Movie, Rating
 from database.models.models import Genre
 
 
@@ -45,3 +47,18 @@ class MovieRepository:
         movies = query.offset(offset).limit(per_page).all()
 
         return movies, total
+
+    def add_rating(self, movie_id, user_id, rating):
+        stmt = insert(Rating).values(movie_id=movie_id,
+                                     user_id=user_id,
+                                     rating=rating,
+                                     recorded_at=int(time.time()))
+        stmt = stmt.on_conflict_do_update(
+            index_elements=["movie_id", "user_id"],
+            set_= {
+                "rating": stmt.excluded.rating,
+                "recorded_at": stmt.excluded.recorded_at
+            }
+        )
+        self.session.execute(stmt)
+        self.session.commit()
