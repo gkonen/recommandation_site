@@ -63,3 +63,5 @@ class MovieController:
             "genres": genre_list,
             "tags" : tags
         }
+    def post_rating_on_movie(self, movie_id, user_id, rating):
+        self.__repository.add_rating(movie_id, user_id, rating)
