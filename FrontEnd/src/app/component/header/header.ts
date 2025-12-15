@@ -36,4 +36,8 @@ export class Header {
       await this.router.navigate(['/register']);
     }
   }
+
+  async onTitleClick() {
+    await this.router.navigate(['/']);
+  }
 }
