@@ -22,7 +22,7 @@
   <app-pagination (changePage)="onPageChange($event)"
                   [paginationDetail]="pagination()"></app-pagination>
   @if (state().status === 'view') {
-    <div class="container movie-grid">
+    <div class="container movie-grid" >
       @for (movie of catalogMovie(); track movie.id) {
         <app-card-movie
           (click)="openPopup(movie)"
