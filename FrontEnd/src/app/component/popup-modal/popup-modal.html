@@ -5,13 +5,26 @@
     <h3>Insert your rating for {{ movie().title }}</h3>
   </div>
 
-  <div class="modal-body">
+  <form class="modal-body" #f="ngForm" (ngSubmit)="onConfirm()" novalidate>
     <label for="inputData">Your note :</label>
-    <input id="inputData" type="number" [ngModel]="rating()" (ngModelChange)="rating.set( $event)"/>
-  </div>
+    <input id="inputData" type="number" name="rating" required
+           min="0.5" max="5" step="0.5"
+           [ngModel]="rating()"
+           (ngModelChange)="rating.set( $event)"
+           #ratingCtrl="ngModel"/>
+      @if( ratingCtrl.invalid && (ratingCtrl.touched || ratingCtrl.dirty)) {
+        @if(ratingCtrl.errors?.['required']) {
+          <div class="error-message">Rating is required</div>
+        }
+        @if(ratingCtrl.errors?.['min'] || ratingCtrl.errors?.['max']) {
+          <div class="error-message">Rating must be between 0.5 and 5</div>
+        }
+      }
+    <div class="modal-footer">
+      <button class="md-button cancel-button" (click)="onCancel()">Cancel</button>
+      <button class="md-button" [disabled]="f.invalid" (click)="onConfirm()">Confirm</button>
+    </div>
 
-  <div class="modal-footer">
-    <button class="md-button cancel-button" (click)="onCancel()">Cancel</button>
-    <button class="md-button" [disabled]="!rating()" (click)="onConfirm()">Confirm</button>
-  </div>
+  </form>
+
 </div>
