@@ -67,6 +67,16 @@
     &:hover {
       border-color: var(--primary);
     }
+
+    &.ng-invalid.ng-touched, &.ng-invalid.ng-touched {
+      color: var(--error);
+      border-color: var(--error);
+    }
+  }
+  .error-message {
+    color: var(--error);
+    padding-top: 0.5rem;
+    font-size: 1rem;
   }
 }
 

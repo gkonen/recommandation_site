@@ -1,5 +1,5 @@
 import {Component, input, output, signal} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
 import {Movie} from '../../api/MovieModel';
 
 @Component({
@@ -17,7 +17,11 @@ export class PopupModal {
   readonly confirm = output<number>()
   readonly close = output<boolean>()
 
-  onConfirm() {
+  onConfirm(form?: NgForm) {
+    if( form?.invalid || this.rating() == -1) {
+      form?.control.markAllAsTouched();
+      return;
+    }
     console.log("posted on Modal : ", this.rating())
     this.confirm.emit(this.rating() ?? -1);
   }
