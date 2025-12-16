@@ -1,10 +1,12 @@
-from repository.movie_repository import MovieRepository
 import math
 
+from repository.movie_repository import MovieRepository
+from utils.recommendation import Recommendation
 
 class MovieController:
     def __init__(self, movie_repository : MovieRepository):
         self.__repository = movie_repository
+        self._recommendation = Recommendation()
 
     def get_all_movies(self, title=None, year=None, genre_name=None, page=1, per_page=50):
         """
