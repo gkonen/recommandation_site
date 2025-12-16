@@ -61,3 +61,29 @@ class UserRepository:
         self.session.commit()
         self.session.refresh(new_user)
         return new_user
+    
+    def get_highly_rated_movies_by_user(self, user_id, min_rating=6, limit=5):
+        """
+        Get movies that the user rated >= min_rating.
+        
+        Args:
+            user_id: The user's ID
+            min_rating: Minimum rating threshold (default: 6)
+            limit: Maximum number of movies to return (default: 5)
+            
+        Returns:
+            List of movie_ids ordered by user's rating descending
+        """
+        from database.models.models import Rating
+        
+        high_ratings = (
+            self.session.query(Rating.movie_id)
+            .filter(Rating.user_id == user_id)
+            .filter(Rating.rating >= min_rating)
+            .order_by(Rating.rating.desc())
+            .limit(limit)
+            .all()
+        )
+        
+        movie_ids = [rating.movie_id for rating in high_ratings]
+        return movie_ids
