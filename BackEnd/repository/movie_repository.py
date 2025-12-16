@@ -62,3 +62,38 @@ class MovieRepository:
         )
         self.session.execute(stmt)
         self.session.commit()
+
+    def get_top_rated_movies(self, limit=20):
+        """
+        Get top-rated movies by average score.
+        
+        Args:
+            limit: Number of movies to return
+            
+        Returns:
+            List of Movie objects ordered by score descending
+        """
+        movies = (
+            self.session.query(Movie)
+            .filter(Movie.score.isnot(None))  # Only movies with scores
+            .order_by(Movie.score.desc())
+            .limit(limit)
+            .all()
+        )
+        return movies
+    
+    def get_movies_by_ids(self, movie_ids):
+        """
+        Get multiple movies by their IDs in a single query.
+        
+        Args:
+            movie_ids: List of movie IDs
+            
+        Returns:
+            List of Movie objects
+        """
+        if not movie_ids:
+            return []
+        
+        movies = self.session.query(Movie).filter(Movie.movie_id.in_(movie_ids)).all()
+        return movies
