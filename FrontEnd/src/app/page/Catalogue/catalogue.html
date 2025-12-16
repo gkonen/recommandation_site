@@ -1,15 +1,17 @@
 <div [style.cursor]="state().status === 'loading' ? 'wait' : 'default'">
 
-  <h2>Recommended Movies</h2>
-  @if (state().status === 'view') {
-    <div class="container">
-      <app-slider-movie [movies_list]="recommendMovie()"></app-slider-movie>
-    </div>
-  }
-  @else if (state().status === 'no-result') {
-    <div class="no-result">
-      <h3>No result for this search</h3>
-    </div>
+  @if (isAuthenticated()) {
+    <h2>Recommended Movies</h2>
+    @if (state().status === 'view') {
+      <div class="container">
+        <app-slider-movie [movies_list]="recommendMovie()"></app-slider-movie>
+      </div>
+    }
+    @else if (state().status === 'no-result') {
+      <div class="no-result">
+        <h3>No result for this search</h3>
+      </div>
+    }
   }
 
   <h2>Catalogue</h2>

@@ -50,6 +50,22 @@ export class MovieService {
     );
   }
 
+  get_recommended_movies(user_id: number) {
+    // TODO : insert real path and test inside catalog
+    return this.http.get<ResponseCatalogue>(this.url + 'movies/recommendations/' + user_id).pipe(
+      map(response => ({
+        movies: response.movies.map(movie => ({
+          id: movie.id,
+          title: movie.title,
+          year: movie.year,
+          score: Math.round(movie.score * 10)/20,
+          genres: movie.genres,
+          tags: movie.tags
+        }))
+      }))
+    )
+  }
+
   get_all_genres() {
     return this.http.get<ResponseGenre>(this.url + 'genres').pipe(
       map(response => response.genres)
