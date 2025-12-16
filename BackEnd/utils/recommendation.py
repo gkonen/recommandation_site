@@ -49,7 +49,7 @@ class Recommendation:
     def _preprocess_ratings(cls):
         pass
 
-    def recommend_for_user(self, user_id: int, list_movie: list[int], k: int = 5):
+    def recommend_for_user(self, list_movie: list[int], k: int = 5):
         self._data_loader()
         recommend_dict : dict[int, float] = {}
         # For evert mmovie in list_movie, we search the k most similar movies
@@ -64,7 +64,7 @@ class Recommendation:
         sorted_recommend_dict = dict(sorted(recommend_dict.items(), key=lambda item: item[1], reverse=True))
 
         # return id of the movies find in our dictionary
-        return [movie_id for movie_id, _ in sorted_recommend_dict]
+        return [movie_id for movie_id, _ in sorted_recommend_dict.items()]
 
 
     def _similar_movies(self, film_id: int, k: int = 5):
