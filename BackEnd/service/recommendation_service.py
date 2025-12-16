@@ -1,10 +1,12 @@
-from utils import Recommendation
+
+from utils.recommendation import Recommendation
 
 
 class RecommendationService:
-    def __init__(self, user_repository, movie_repository):
+    def __init__(self, user_repository, movie_repository, recommendation):
         self.user_repository = user_repository
         self.movie_repository = movie_repository
+        self.recommandation : Recommendation = recommendation
     
     def get_recommendations_for_user(self, user_id, limit=25):
         """
@@ -55,33 +57,33 @@ class RecommendationService:
             fave_ids: List of movie IDs user rated highly
             user_id: User ID (to exclude already rated movies)
         """
-        all_recommended_ids = []
+        all_recommended_ids = self.recommandation.recommend_for_user(fave_ids)
         
-        # For each highly-rated movie, get recommendations
-        for movie_id in fave_ids:
-            recommended_ids = self.recommend_for_user(movie_id)
-            all_recommended_ids.extend(recommended_ids)
+        # # For each highly-rated movie, get recommendations
+        # for movie_id in fave_ids:
+        #     recommended_ids = self.recommend_for_user(movie_id)
+        #     all_recommended_ids.extend(recommended_ids)
         
-        # Remove duplicates
-        seen = set()
-        unique_ids = []
-        for movie_id in all_recommended_ids:
-            if movie_id not in seen:
-                seen.add(movie_id)
-                unique_ids.append(movie_id)
+        # # Remove duplicates
+        # seen = set()
+        # unique_ids = []
+        # for movie_id in all_recommended_ids:
+        #     if movie_id not in seen:
+        #         seen.add(movie_id)
+        #         unique_ids.append(movie_id)
         
-        # Remove favorite movies from recommendations
-        unique_ids = [mid for mid in unique_ids if mid not in fave_ids]
+        # # Remove favorite movies from recommendations
+        # unique_ids = [mid for mid in unique_ids if mid not in fave_ids]
         
         # Remove movies user has already rated
         user_rated_ids = set(r.movie_id for r in self.user_repository.get_ratings_by_user(user_id))
-        unique_ids = [mid for mid in unique_ids if mid not in user_rated_ids]
+        all_recommended_ids = [mid for mid in all_recommended_ids if mid not in user_rated_ids]
         
         # Get full movie objects
-        if not unique_ids:
+        if not all_recommended_ids:
             return []
         
-        recommended_movies = self.movie_repository.get_movies_by_ids(unique_ids)
+        recommended_movies = self.movie_repository.get_movies_by_ids(all_recommended_ids)
         
         return recommended_movies
     
