@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, effect, inject, OnInit, signal} from '@angular/core';
 import {CardMovie} from '../../component/card-movie/card-movie';
 import {Movie} from '../../api/MovieModel';
 import {Pagination} from '../../component/pagination/pagination';
@@ -10,6 +10,7 @@ import {ResponseCatalogue} from '../../api/ResponseMovieModel';
 import {PaginationDetail} from '../../api/service/PaginationDetailModel';
 import {PopupModal} from '../../component/popup-modal/popup-modal';
 import {AuthService} from '../../api/service/auth-service';
+import {Subscription} from 'rxjs';
 
 type CatalogueState =
   | { status: 'idle' }
@@ -32,9 +33,11 @@ type CatalogueState =
 export class Catalogue implements OnInit {
   private movieService = inject(MovieService);
   private authService = inject(AuthService);
+
   private searchFilter = signal<MovieFilter | null>(null);
 
   readonly state = signal<CatalogueState>({ status: 'idle' });
+  readonly isAuthenticated = this.authService.isAuthenticated;
 
   readonly isPopupVisible = signal<boolean>(false);
   readonly selectedMovie = signal<Movie | null>(null);
@@ -50,6 +53,22 @@ export class Catalogue implements OnInit {
     total: 1,
     total_pages: 1
   });
+
+  constructor() {
+    // effect permit to react directly when the signal change
+    // the on cleanup permit unsubscribing when the component is destroyed to avoid memory leakage
+    effect((onCleanup) => {
+      let subscription: Subscription | null = null
+      if(this.isAuthenticated()) {
+        subscription = this.loadRecommendation(this.authService.getUser().id);
+      } else {
+        this.recommendMovie.set([]);
+      }
+      onCleanup(() => {
+        subscription?.unsubscribe();
+      })
+    })
+  }
 
   ngOnInit() {
     this.loadMovies();
@@ -83,6 +102,21 @@ export class Catalogue implements OnInit {
         }
       }
     })
+  }
+
+  loadRecommendation(userId: number) {
+    return this.movieService.get_recommended_movies(userId)
+      .subscribe({
+        next: (response) => {
+          this.recommendMovie.set(response.movies);
+        },
+        error: () => {
+          console.error('Error while fetching recommendations');
+        },
+        complete: () => {
+          console.log("All is fine")
+        }
+      });
   }
 
   openPopup(movie: Movie) {
