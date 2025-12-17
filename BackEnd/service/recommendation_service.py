@@ -1,11 +1,13 @@
 from utils.recommendation import Recommendation
+import pandas as pd
 
 class RecommendationService:
     def __init__(self, user_repository, movie_repository, recommendation):
         self.user_repository = user_repository
         self.movie_repository = movie_repository
         self.recommandation : Recommendation = recommendation
-    
+
+    #region RECOMMENDATION CONTENT-BASED
     def get_recommendations_for_user(self, user_id, limit=25):
         """
         Generate movie recommendations for a user.
@@ -85,4 +87,18 @@ class RecommendationService:
         recommended_movies = self.movie_repository.get_movies_by_ids(all_recommended_ids)
         
         return recommended_movies
-    
+
+    #endregion
+
+    #region RECOMMENDATION CF USER-BASED
+    def get_recommendation_by_knn(self, user_id, k=5):
+        list_rating = self.user_repository.get_ratings_by_user(user_id)  # movie_id, user_id, rating
+        rows = [{"movie_id": rating.movie_id, "user_id": rating.user_id, "rating": rating.rating} for rating in
+                list_rating]
+        user_history = pd.DataFrame(rows)
+        vector = self.recommandation.vectorize_user(user_history)
+        print(vector)
+
+
+
+
