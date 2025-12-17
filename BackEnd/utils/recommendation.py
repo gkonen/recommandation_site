@@ -102,14 +102,23 @@ class Recommendation:
 
         return movie_ids[idx], scores[idx]
 
-    def recommend_for_user_using_knn(self, user_id, list_movie, k: int = 5):
+    def recommend_for_user_using_knn(self, user_id, user_vector, k: int = 5):
+        # add the user vector to the dataframe
+        user_vector_aligned = user_vector.reindex(
+            columns=type(self)._user_preferences_df.columns,
+            fill_value=0
+        )
+        type(self)._user_preferences_df = pd.concat(
+            [type(self)._user_preferences_df, user_vector_aligned],
+            ignore_index=False
+        ).fillna(0)
         # loading data
         matrice = type(self)._user_preferences_df.to_numpy(dtype=np.float32)
         user_ids = type(self)._user_preferences_df.index.to_numpy()
         ratings = type(self)._ratings_df
         pos = {u: i for i, u in enumerate(user_ids)}
         # fit the model
-        NN = NearestNeighbors(n_neighbors=11, metric='cosine', algorithm='brute')
+        NN = NearestNeighbors(n_neighbors=k + 1, metric='cosine', algorithm='brute')
         NN.fit(matrice)
 
         # retrieve from the model the nearest user in our dataframe
@@ -128,5 +137,16 @@ class Recommendation:
         return list(set(movie_recommendation))
 
     def vectorize_user(self, rating_user):
-        clean_movie =
-        pd.merge(rating_user, self._movies_df, on="movieId")
+        movies_clean = type(self)._movies_df.copy()
+
+        score_df = pd.merge(rating_user, movies_clean, on="movieId")
+        score_df = score_df.explode("list")
+        score_df = score_df.rename(columns={"list": "genres"})
+        score_df = score_df.drop(columns=["title"])
+
+        vector_score = pd.pivot_table(score_df, index=["userId"], columns=["genres"], values="rating",
+                                      aggfunc=lambda s: np.where(s > 2.5, 1, -1).sum()).fillna(0)
+        vector_score['count'] = vector_score.abs().sum(axis=1)
+        vector_score = vector_score.div(vector_score['count'], axis=0).round(2)
+        vector_score = vector_score.drop(columns=['count'])
+        return vector_score

@@ -93,11 +93,15 @@ class RecommendationService:
     #region RECOMMENDATION CF USER-BASED
     def get_recommendation_by_knn(self, user_id, k=5):
         list_rating = self.user_repository.get_ratings_by_user(user_id)  # movie_id, user_id, rating
-        rows = [{"movie_id": rating.movie_id, "user_id": rating.user_id, "rating": rating.rating} for rating in
+        rows = [{"movieId": rating.movie_id, "userId": rating.user_id, "rating": rating.rating} for rating in
                 list_rating]
         user_history = pd.DataFrame(rows)
         vector = self.recommandation.vectorize_user(user_history)
         print(vector)
+        list_movie_id = self.recommandation.recommend_for_user_using_knn(user_id, vector, k)
+        return self.movie_repository.get_movies_by_ids(list_movie_id)
+
+
 
 
 
