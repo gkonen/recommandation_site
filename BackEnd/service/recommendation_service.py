@@ -1,6 +1,4 @@
-
 from utils.recommendation import Recommendation
-
 
 class RecommendationService:
     def __init__(self, user_repository, movie_repository, recommendation):
@@ -37,6 +35,7 @@ class RecommendationService:
         
         # If user has no high ratings, return top 20 movies
         if not highly_rated_ids:
+            print("No highly rated movies found, returning top 20 movies")
             return self._get_top_catalog_movies()
         
         # Get recommendations based on highly rated movies

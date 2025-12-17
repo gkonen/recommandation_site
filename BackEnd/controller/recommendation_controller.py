@@ -35,9 +35,14 @@ class RecommendationController:
         Serialize movie in the same format as catalog items.
         Matches the format from MovieController.get_all_movies() except pagination-related info.
         """
+        score = movie.score.rating if movie.score else None
+        genre_list = [g.genre_name for g in movie.genres]
+        tags = [tag.clean_tag for tag in movie.tags]
         return {
             "id": movie.movie_id,
             "title": movie.title,
             "year": movie.year,
-            "genres": [g.genre_name for g in movie.genres]
+            "score": score,
+            "genres": genre_list,
+            "tags": tags
         }
