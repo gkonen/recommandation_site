@@ -2,13 +2,14 @@ import numpy as np
 import pandas as pd
 
 from sklearn.preprocessing import MultiLabelBinarizer
-
+from sklearn.neighbors import NearestNeighbors
 
 class Recommendation:
 
     _data_loaded = False
     _movies_df: pd.DataFrame | None = None
     _ratings_df: pd.DataFrame | None = None
+    _user_preferences_df: pd.DataFrame | None = None
 
     _movie_encoded = None
     _row_norm_cache: np.ndarray | None = None
@@ -22,9 +23,15 @@ class Recommendation:
         print("Loading movie from csv ...")
         cls._movies_df = pd.read_csv('data/csv_files/movies.csv')
         print("Loading Movies successfully")
-        # print("Loading ratings from csv ...")
-        # cls._ratings_df = pd.read_csv('data/csv_files/ratings.csv')
-        # print("Loading ratings successfully")
+
+        print("Loading ratings from csv ...")
+        cls._ratings_df = pd.read_csv('data/csv_files/ratings.csv')
+        print("Loading ratings successfully")
+
+        print("Loading user_preferencies from pickle ...")
+        cls._user_preferences_df = pd.read_pickle('data/pickle_files/user_preferencies.pkl')
+        print("Loading user_preferencies successfully")
+
         print("Preprocessing data ...")
         cls._preprocess_movies()
         cls._preprocess_ratings()
@@ -94,3 +101,32 @@ class Recommendation:
         idx = idx[np.argsort(scores[idx])[::-1]]
 
         return movie_ids[idx], scores[idx]
+
+    def recommend_for_user_using_knn(self, user_id, list_movie, k: int = 5):
+        # loading data
+        matrice = type(self)._user_preferences_df.to_numpy(dtype=np.float32)
+        user_ids = type(self)._user_preferences_df.index.to_numpy()
+        ratings = type(self)._ratings_df
+        pos = {u: i for i, u in enumerate(user_ids)}
+        # fit the model
+        NN = NearestNeighbors(n_neighbors=11, metric='cosine', algorithm='brute')
+        NN.fit(matrice)
+
+        # retrieve from the model the nearest user in our dataframe
+        i = pos[user_id]
+        dist, ind = NN.kneighbors(matrice[i:i + 1], n_neighbors=k + 1)
+        ind = ind.ravel()
+        mask = ind != i
+        ind = ind[mask][:k]
+        similar_user = user_ids[ind]
+
+        movie_recommendation = []
+        for u_id in similar_user:
+            most_rated = ratings[ratings["userId"] == u_id].sort_values(by=["rating"], ascending=False).head(k)["movieId"].to_numpy()
+            movie_recommendation.extend(most_rated)
+
+        return list(set(movie_recommendation))
+
+    def vectorize_user(self, rating_user):
+        clean_movie =
+        pd.merge(rating_user, self._movies_df, on="movieId")
