@@ -16,10 +16,9 @@ class RecommendationController:
             Tuple of (response dict, status code)
         """
         try:
-            self.__service.get_recommendation_by_knn(user_id, limit)
-            #print(test[0].movie_id, test[0].user_id, test[0].rating )
 
-            recommendations = self.__service.get_recommendations_for_user(user_id, limit)
+            #recommendations = self.__service.get_recommendations_for_user(user_id, limit)
+            recommendations = self.__service.get_recommendation_by_knn(user_id)
             recommended_movies = [self._serialize_movie(m) for m in recommendations]
             return {
                 "user_id": user_id,
