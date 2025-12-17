@@ -52,7 +52,7 @@ export class MovieService {
 
   get_recommended_movies(user_id: number) {
     // TODO : insert real path and test inside catalog
-    return this.http.get<ResponseCatalogue>(this.url + 'movies/recommendations/' + user_id).pipe(
+    return this.http.get<ResponseCatalogue>(this.url + 'recommendations/' + user_id).pipe(
       map(response => ({
         movies: response.movies.map(movie => ({
           id: movie.id,

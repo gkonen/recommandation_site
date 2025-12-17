@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from utils.decorators import with_session
 from utils.recommendation_factory import RecommendationFactory
 

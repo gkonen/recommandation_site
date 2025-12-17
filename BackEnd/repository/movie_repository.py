@@ -1,6 +1,8 @@
 import time
+
+from sqlalchemy import desc
 from sqlalchemy.dialects.postgresql import insert
-from database.models.models import Movie, Rating
+from database.models.models import Movie, Rating, MovieRating
 from database.models.models import Genre
 
 
@@ -73,13 +75,7 @@ class MovieRepository:
         Returns:
             List of Movie objects ordered by score descending
         """
-        movies = (
-            self.session.query(Movie)
-            .filter(Movie.score.isnot(None))  # Only movies with scores
-            .order_by(Movie.score.desc())
-            .limit(limit)
-            .all()
-        )
+        movies = self.session.query(Movie).join(Movie.score).order_by(desc(MovieRating.rating)).limit(limit).all()
         return movies
     
     def get_movies_by_ids(self, movie_ids):

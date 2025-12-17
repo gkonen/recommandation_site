@@ -1,12 +1,10 @@
 import math
 
 from repository.movie_repository import MovieRepository
-from utils.recommendation import Recommendation
 
 class MovieController:
-    def __init__(self, movie_repository : MovieRepository, recommendation: Recommendation):
+    def __init__(self, movie_repository : MovieRepository):
         self.__repository = movie_repository
-        self._recommendation = recommendation
 
     def get_all_movies(self, title=None, year=None, genre_name=None, page=1, per_page=50):
         """
@@ -32,8 +30,6 @@ class MovieController:
 
         total_pages = math.ceil(total / per_page) if total > 0 else 0
         serialized_movies = [ self._serialize_movie(m) for m in movies ]
-
-        print(self.get_recommendation())
 
         return {
             "movies": serialized_movies,
@@ -73,4 +69,4 @@ class MovieController:
 
 
     def post_rating_on_movie(self, movie_id, user_id, rating):
-        self.__repository.add_rating(movie_id, user_id, rating)
+        self.__repository.add_rating(movie_id, user_id, rating*2)
