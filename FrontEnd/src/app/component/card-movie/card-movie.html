@@ -12,26 +12,28 @@
     <img src="/picture.svg" alt="{{ movie().title }}" class="movie-image" />
   </div>
 
-  <div class="movie-years">
-    <span class="years-label">Year :</span>
-    <span class="years-value">{{ movie().year }}</span>
-  </div>
+  <div class="movie-bottom-container">
+    <div class="movie-years">
+      <span class="years-label">Year :</span>
+      <span class="years-value">{{ movie().year }}</span>
+    </div>
 
-  <div class="movie-genres">
-    <span class="genre-label">Genres:</span>
-    <div class="genres-list">
-      @for (genre of movie().genres; track $index) {
-        <span class="genre-item"> {{ genre }} </span>
-      }
+    <div class="movie-genres">
+      <span class="genre-label">Genres:</span>
+      <div class="genres-list">
+        @for (genre of movie().genres; track $index) {
+          <span class="genre-item"> {{ genre }} </span>
+        }
+      </div>
+    </div>
+    <div class="movie-tags">
+      <span class="tag-label">Tags:</span>
+      <div class="tags-list">
+        @for (tag of movie().tags; track $index) {
+          <span class="tag-item"> {{ tag }} </span>
+        }
+      </div>
     </div>
   </div>
 
-  <div class="movie-tags">
-    <span class="tag-label">Tags:</span>
-    <div class="tags-list">
-      @for (tag of movie().tags; track $index) {
-        <span class="tag-item"> {{ tag }} </span>
-      }
-    </div>
-  </div>
 </div>
